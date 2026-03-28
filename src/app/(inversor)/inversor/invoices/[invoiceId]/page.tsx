@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { EventTimeline } from '@/components/invoices/event-timeline';
 import { InvoiceStatusStepper } from '@/components/invoices/invoice-status-stepper';
+import { InvoiceFactsList } from '@/components/marketplace/invoice-facts-list';
 import { SettlementSummary } from '@/components/invoices/settlement-summary';
 import { PurchaseFractionsForm } from '@/components/marketplace/purchase-fractions-form';
 import { RiskBadge } from '@/components/invoices/risk-badge';
@@ -25,6 +26,12 @@ export default async function InvestorInvoiceDetailPage({ params }: { params: Pr
   const dueDate = settlementView?.invoice.dueDate ?? snapshot?.dueDate ?? '';
   const discountRate = snapshot?.discountRate ?? 0;
   const riskTier = snapshot?.riskTier ?? 'A';
+  const payerCuit = snapshot?.payerCuit ?? '';
+  const daysToMaturity = snapshot?.daysToMaturity ?? 0;
+  const availableFractions = snapshot?.availableFractions ?? 0;
+  const perFractionNetAmount = snapshot?.perFractionNetAmount ?? 0;
+  const perFractionExpectedReturn = snapshot?.perFractionExpectedReturn ?? 0;
+  const progressPercentage = snapshot?.progressPercentage ?? 0;
 
   return (
     <section className="mx-auto max-w-6xl space-y-8 px-6 py-16">
@@ -50,6 +57,24 @@ export default async function InvestorInvoiceDetailPage({ params }: { params: Pr
       </div>
 
       <InvoiceStatusStepper currentStatus={currentStatus} />
+
+      {snapshot ? (
+        <section className="rounded-3xl border border-white/10 bg-slate-950/50 p-6">
+          <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Ficha del cheque</p>
+          <h2 className="mt-2 text-2xl font-semibold text-white">Días al vencimiento y economía por fracción antes de comprar</h2>
+          <div className="mt-6">
+            <InvoiceFactsList
+              availableFractions={availableFractions}
+              daysToMaturity={daysToMaturity}
+              discountRate={discountRate}
+              payerCuit={payerCuit}
+              perFractionExpectedReturn={perFractionExpectedReturn}
+              perFractionNetAmount={perFractionNetAmount}
+              progressPercentage={progressPercentage}
+            />
+          </div>
+        </section>
+      ) : null}
 
       {settlementView ? (
         <>

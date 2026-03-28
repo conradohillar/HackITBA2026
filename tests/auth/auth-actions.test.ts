@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 import { afterEach, describe, expect, it } from 'vitest';
 import { authRoles } from '@/lib/auth/types';
 import { buildSignupMetadata, loginSchema, signupSchema } from '@/lib/auth/schemas';
+import { getDashboardPathForRole } from '@/lib/auth/session';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? process.env.SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -44,6 +45,8 @@ describe('Phase 1 auth harness', () => {
 
   it('pins the shared role and schema contract for later auth work', () => {
     expect(authRoles).toEqual(['cedente', 'inversor']);
+    expect(getDashboardPathForRole('cedente')).toBe('/cedente/dashboard');
+    expect(getDashboardPathForRole('inversor')).toBe('/inversor/dashboard');
 
     const signup = signupSchema.parse({
       email: 'demo@karai.app',

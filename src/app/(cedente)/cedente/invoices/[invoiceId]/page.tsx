@@ -18,7 +18,7 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
 
   return (
     <section className="mx-auto max-w-6xl space-y-8 px-6 py-16">
-      <div className="rounded-[2rem] border border-white/10 bg-slate-950/40 p-8">
+      <div className="rounded-[2rem] border border-white/10 bg-[radial-gradient(circle_at_top_left,rgba(110,231,183,0.18),transparent_35%),linear-gradient(180deg,rgba(10,20,17,0.94),rgba(8,12,11,0.8))] p-8 shadow-2xl shadow-black/20">
         <p className="text-sm uppercase tracking-[0.3em] text-emerald-200">Cheque originado</p>
         <h1 className="mt-4 text-4xl font-semibold text-white">{invoice.invoice_number}</h1>
         <div className="mt-6 grid gap-4 md:grid-cols-4">
@@ -68,7 +68,7 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
 
       <EventTimeline items={settlementView.timeline} />
 
-      <section className="rounded-3xl border border-white/10 bg-slate-950/50 p-6">
+      <section className="rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(12,18,16,0.92),rgba(8,12,11,0.78))] p-6 shadow-xl shadow-black/15">
         <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Historial transaccional</p>
         <h2 className="mt-2 text-2xl font-semibold text-white">Ledger visible para el cedente</h2>
         <div className="mt-6 space-y-3">

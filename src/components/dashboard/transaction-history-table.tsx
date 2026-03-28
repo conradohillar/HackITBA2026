@@ -25,7 +25,7 @@ export function TransactionHistoryTable({ items, emptyMessage }: TransactionHist
   }
 
   return (
-    <div className="overflow-hidden rounded-3xl border border-white/10 bg-slate-950/50">
+    <div className="overflow-hidden rounded-[1.9rem] border border-white/10 bg-[linear-gradient(180deg,rgba(12,18,16,0.92),rgba(8,12,11,0.8))] shadow-xl shadow-black/15">
       <div className="grid grid-cols-[1.4fr,0.8fr,0.8fr] gap-4 border-b border-white/10 px-5 py-4 text-xs uppercase tracking-[0.25em] text-slate-400">
         <span>Movimiento</span>
         <span>Fecha</span>

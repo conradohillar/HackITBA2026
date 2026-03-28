@@ -60,6 +60,11 @@ describe('Phase 1 auth harness', () => {
 
     expect(signup.role).toBe('cedente');
     expect(login.email).toBe('demo@karai.app');
+    expect(buildSignupMetadata(signup)).toEqual({
+      role: 'cedente',
+      display_name: 'Karaí Demo',
+      company_name: 'Acme SA',
+    });
   });
 
   it('creates the exact signup metadata shape the profile trigger requires', async () => {

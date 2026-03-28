@@ -91,5 +91,6 @@ describe('invoice transition invariants', () => {
       id: invoice!.id,
       status: 'validating',
     });
+    expect(valid.data?.funding_started_at).toBeNull();
   });
 });

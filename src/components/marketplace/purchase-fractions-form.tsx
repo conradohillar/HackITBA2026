@@ -25,10 +25,10 @@ export function PurchaseFractionsForm({ initialSnapshot }: PurchaseFractionsForm
   const refresh = useCallback(async () => {
     const supabase = createSupabaseBrowserClient();
     const { data: invoice } = await supabase
-      .from('invoices')
-      .select(
-        'id, status, invoice_number, pagador_name, amount, net_amount, risk_tier, discount_rate, total_fractions, funded_fractions, due_date',
-      )
+        .from('invoices')
+        .select(
+          'id, status, invoice_number, pagador_name, pagador_cuit, amount, net_amount, risk_tier, discount_rate, total_fractions, funded_fractions, due_date',
+        )
       .eq('id', initialSnapshot.id)
       .in('status', ['funding', 'funded'])
       .maybeSingle();

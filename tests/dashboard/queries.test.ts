@@ -172,6 +172,10 @@ describe('Phase 4 settlement read models', () => {
       },
     ]);
     expect(dashboard.weightedAverageYield).toBeCloseTo((100 + 200) / 1200, 5);
+    expect(dashboard.expectedOpenReturn).toBe(500);
+    expect(dashboard.realizedReturnTotal).toBe(200);
+    expect(dashboard.topPayerConcentration).toBeCloseTo(800 / 1200, 5);
+    expect(dashboard.holdingsByStatus).toEqual({ funding: 1, funded: 0, settling: 0, settled: 1 });
     expect(dashboard.diversificationCount).toBe(2);
     expect(dashboard.payerBreakdown).toEqual([
       { payerCuit: '30712345679', payerName: 'Pagador Dos', investedPrincipal: 800, share: 800 / 1200 },

@@ -12,18 +12,23 @@ El happy path completo funciona de punta a punta en la demo: PyME sube factura �
 
 ### Validated
 
-(None yet — ship to validate)
+- IA risk experience on cedente detail: structured BCRA facts, deterministic provenance, and automatic tokenization handoff are validated in Phase 5: IA Risk + UX Polish
+- Investor navigation polish: cheque-style marketplace cards, richer portfolio outcomes, and desktop/mobile happy-path proof are validated in Phase 5: IA Risk + UX Polish
 
 ### Active
 
 - [ ] Motor de originación: carga de datos de factura, validación y generación de hash SHA-256
-- [ ] Scoring de riesgo con IA: consulta real a API BCRA (deudas, históricas, cheques rechazados) + LLM que produce tier, tasa de descuento y explicación
+- [ ] Scoring de riesgo con IA: consulta real a API BCRA (deudas, históricas, cheques rechazados) + LLM que produce tier, tasa de descuento y explicación base
 - [ ] Marketplace de fracciones: dashboard donde facturas tokenizadas se listan y fondean por múltiples inversores
 - [ ] Fondeo colectivo: inversores compran fracciones hasta completar el 100% del monto
 - [ ] Liquidación simulada: al vencimiento se simula el pago corporativo, se quema el token y se distribuyen capital + intereses
 - [ ] Trazabilidad de eventos: registro transaccional inmutable del flujo de fondos (oferta, match, desembolso)
 - [ ] Autenticación y RBAC: roles separados para PyMEs (cedentes) e inversores (fondeadores)
-- [ ] Dashboard profesional para la demo con UX pulida
+- [ ] Dashboard profesional para la demo con UX pulida base
+
+## Current State
+
+Phase 5 complete: Karaí now explains cedente risk with structured persisted facts, makes the automatic tokenization-to-funding handoff explicit, and gives investors a cheque-centric dashboard/detail journey validated on desktop and mobile.
 
 ### Out of Scope
 
@@ -82,4 +87,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-28 after initialization*
+*Last updated: 2026-03-28 after Phase 5 completion*

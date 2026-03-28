@@ -3,6 +3,9 @@ import { getInvoiceFundingSnapshot, getMarketplaceInvoices } from '@/lib/marketp
 
 describe('marketplace queries', () => {
   it('returns only funding-ready invoices with the investor card metrics', async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-03-31T00:00:00.000Z'));
+
     const invoices = await getMarketplaceInvoices({
       getAuthState: vi.fn().mockResolvedValue({ user: { id: 'investor-1' }, profile: { role: 'inversor' } }),
       listFundingInvoices: vi.fn().mockResolvedValue([
@@ -11,6 +14,7 @@ describe('marketplace queries', () => {
           status: 'funding',
           invoice_number: 'FAC-100',
           pagador_name: 'Techint SA',
+          pagador_cuit: '30711222333',
           amount: 80000,
           net_amount: 70000,
           risk_tier: 'A',
@@ -24,6 +28,7 @@ describe('marketplace queries', () => {
           status: 'funded',
           invoice_number: 'FAC-200',
           pagador_name: 'Arcor SAIC',
+          pagador_cuit: '30799888777',
           amount: 50000,
           net_amount: 45000,
           risk_tier: 'B',
@@ -37,6 +42,7 @@ describe('marketplace queries', () => {
           status: 'draft',
           invoice_number: 'FAC-300',
           pagador_name: 'Should Not Leak',
+          pagador_cuit: '30000000000',
           amount: 10000,
           net_amount: 9000,
           risk_tier: 'C',
@@ -53,6 +59,7 @@ describe('marketplace queries', () => {
         id: 'inv-1',
         invoiceNumber: 'FAC-100',
         pagadorName: 'Techint SA',
+        payerCuit: '30711222333',
         amount: 80000,
         netAmount: 70000,
         riskTier: 'A',
@@ -60,12 +67,17 @@ describe('marketplace queries', () => {
         totalFractions: 8,
         fundedFractions: 3,
         availableFractions: 5,
+        daysToMaturity: 91,
+        perFractionNetAmount: 8750,
+        perFractionExpectedReturn: 10000,
+        progressPercentage: 37.5,
         dueDate: '2026-06-30',
       },
       {
         id: 'inv-2',
         invoiceNumber: 'FAC-200',
         pagadorName: 'Arcor SAIC',
+        payerCuit: '30799888777',
         amount: 50000,
         netAmount: 45000,
         riskTier: 'B',
@@ -73,12 +85,21 @@ describe('marketplace queries', () => {
         totalFractions: 5,
         fundedFractions: 5,
         availableFractions: 0,
+        daysToMaturity: 106,
+        perFractionNetAmount: 9000,
+        perFractionExpectedReturn: 10000,
+        progressPercentage: 100,
         dueDate: '2026-07-15',
       },
     ]);
+
+    vi.useRealTimers();
   });
 
   it('returns the invoice funding snapshot with available fractions and return inputs', async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2026-03-31T00:00:00.000Z'));
+
     const snapshot = await getInvoiceFundingSnapshot('inv-1', {
       getAuthState: vi.fn().mockResolvedValue({ user: { id: 'investor-1' }, profile: { role: 'inversor' } }),
       getFundingInvoiceById: vi.fn().mockResolvedValue({
@@ -86,6 +107,7 @@ describe('marketplace queries', () => {
         status: 'funding',
         invoice_number: 'FAC-100',
         pagador_name: 'Techint SA',
+        pagador_cuit: '30711222333',
         amount: 80000,
         net_amount: 70000,
         risk_tier: 'A',
@@ -107,6 +129,7 @@ describe('marketplace queries', () => {
       id: 'inv-1',
       invoiceNumber: 'FAC-100',
       pagadorName: 'Techint SA',
+      payerCuit: '30711222333',
       amount: 80000,
       netAmount: 70000,
       riskTier: 'A',
@@ -114,11 +137,15 @@ describe('marketplace queries', () => {
       totalFractions: 8,
       fundedFractions: 3,
       availableFractions: 5,
+      daysToMaturity: 91,
       dueDate: '2026-06-30',
       availableFractionIds: ['frac-4', 'frac-5', 'frac-6', 'frac-7', 'frac-8'],
       perFractionNetAmount: 8750,
       perFractionExpectedReturn: 10000,
+      progressPercentage: 37.5,
     });
+
+    vi.useRealTimers();
   });
 
   it('returns null for missing or unauthorized invoice lookups', async () => {

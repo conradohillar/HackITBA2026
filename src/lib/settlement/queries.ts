@@ -106,6 +106,10 @@ type InvestorDashboard = {
     status: string;
   }>;
   weightedAverageYield: number;
+  expectedOpenReturn: number;
+  realizedReturnTotal: number;
+  topPayerConcentration: number;
+  holdingsByStatus: Record<string, number>;
   diversificationCount: number;
   payerBreakdown: Array<{
     payerCuit: string;
@@ -475,6 +479,10 @@ export async function getInvestorDashboard(overrides?: Partial<QueryDependencies
     return {
       holdings: [],
       weightedAverageYield: 0,
+      expectedOpenReturn: 0,
+      realizedReturnTotal: 0,
+      topPayerConcentration: 0,
+      holdingsByStatus: { funding: 0, funded: 0, settling: 0, settled: 0 },
       diversificationCount: 0,
       payerBreakdown: [],
       recentTransactions: [],
@@ -509,6 +517,13 @@ export async function getInvestorDashboard(overrides?: Partial<QueryDependencies
   );
 
   const payerMap = new Map<string, { payerCuit: string; payerName: string; investedPrincipal: number }>();
+  const holdingsByStatus = mappedHoldings.reduce<Record<string, number>>(
+    (counts, holding) => {
+      counts[holding.status] = (counts[holding.status] ?? 0) + 1;
+      return counts;
+    },
+    { funding: 0, funded: 0, settling: 0, settled: 0 },
+  );
 
   for (const holding of mappedHoldings) {
     const existing = payerMap.get(holding.payerCuit);
@@ -535,6 +550,14 @@ export async function getInvestorDashboard(overrides?: Partial<QueryDependencies
   return {
     holdings: mappedHoldings,
     weightedAverageYield: totalInvestedPrincipal > 0 ? totalYieldNumerator / totalInvestedPrincipal : 0,
+    expectedOpenReturn: roundToCents(
+      mappedHoldings
+        .filter((holding) => ['funding', 'funded', 'settling'].includes(holding.status))
+        .reduce((sum, holding) => sum + holding.expectedReturn, 0),
+    ),
+    realizedReturnTotal: roundToCents(mappedHoldings.reduce((sum, holding) => sum + holding.realizedReturn, 0)),
+    topPayerConcentration: payerBreakdown[0]?.share ?? 0,
+    holdingsByStatus,
     diversificationCount: payerBreakdown.length,
     payerBreakdown,
     recentTransactions: sortTransactionsDesc(transactions.map(mapDashboardTransaction)),

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { FundingProgressBar } from '@/components/marketplace/funding-progress-bar';
+import { InvoiceFactsList } from '@/components/marketplace/invoice-facts-list';
 import { RealtimeStatus } from '@/components/marketplace/realtime-status';
 import { RiskBadge } from '@/components/invoices/risk-badge';
 import type { MarketplaceRealtimeMode } from '@/hooks/use-marketplace-realtime';
@@ -15,7 +16,7 @@ export function MarketplaceCard({ invoice, mode }: MarketplaceCardProps) {
     <article className="rounded-[2rem] border border-white/10 bg-slate-950/40 p-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Factura en funding</p>
+          <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Cheque en funding</p>
           <h3 className="mt-3 text-2xl font-semibold text-white">{invoice.invoiceNumber}</h3>
           <p className="mt-2 text-slate-300">{invoice.pagadorName}</p>
         </div>
@@ -25,10 +26,19 @@ export function MarketplaceCard({ invoice, mode }: MarketplaceCardProps) {
         </div>
       </div>
 
-      <div className="mt-6 grid gap-4 md:grid-cols-3">
-        <Metric label="Tasa descuento" value={`${(invoice.discountRate * 100).toFixed(1)}%`} />
-        <Metric label="Monto neto" value={`ARS ${invoice.netAmount.toLocaleString('es-AR')}`} />
-        <Metric label="Vencimiento" value={invoice.dueDate} />
+      <div className="mt-6 rounded-[1.5rem] border border-white/10 bg-black/20 p-4">
+        <p className="text-sm uppercase tracking-[0.25em] text-slate-500">Ficha del cheque</p>
+        <div className="mt-4">
+          <InvoiceFactsList
+            availableFractions={invoice.availableFractions}
+            daysToMaturity={invoice.daysToMaturity}
+            discountRate={invoice.discountRate}
+            payerCuit={invoice.payerCuit}
+            perFractionExpectedReturn={invoice.perFractionExpectedReturn}
+            perFractionNetAmount={invoice.perFractionNetAmount}
+            progressPercentage={invoice.progressPercentage}
+          />
+        </div>
       </div>
 
       <div className="mt-6">
@@ -36,7 +46,7 @@ export function MarketplaceCard({ invoice, mode }: MarketplaceCardProps) {
       </div>
 
       <div className="mt-6 flex items-center justify-between gap-4 text-sm text-slate-300">
-        <span>{invoice.availableFractions} disponibles</span>
+        <span>{invoice.availableFractions} fracciones disponibles antes del CTA</span>
         <Link
           className="rounded-full bg-white px-4 py-2 font-semibold text-slate-950 transition hover:bg-slate-200"
           href={`/inversor/invoices/${invoice.id}`}
@@ -45,14 +55,5 @@ export function MarketplaceCard({ invoice, mode }: MarketplaceCardProps) {
         </Link>
       </div>
     </article>
-  );
-}
-
-function Metric({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-      <p className="text-sm text-slate-400">{label}</p>
-      <p className="mt-2 text-lg font-semibold text-white">{value}</p>
-    </div>
   );
 }

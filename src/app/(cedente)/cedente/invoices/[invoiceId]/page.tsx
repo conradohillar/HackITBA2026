@@ -16,8 +16,6 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
     notFound();
   }
 
-  const evidence = invoice.bcra_data?.snapshot?.evidence ?? [];
-
   return (
     <section className="mx-auto max-w-6xl space-y-8 px-6 py-16">
       <div className="rounded-[2rem] border border-white/10 bg-slate-950/40 p-8">
@@ -34,20 +32,28 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
 
       <InvoiceStatusStepper currentStatus={invoice.status} />
 
-      {invoice.risk_tier && invoice.discount_rate !== null && invoice.risk_explanation ? (
+      {invoice.risk_tier && invoice.discount_rate !== null && invoice.risk_explanation && invoice.riskSummary ? (
         <RiskSummaryCard
           tier={invoice.risk_tier as 'A' | 'B' | 'C' | 'D'}
           discountRate={Number(invoice.discount_rate)}
           explanation={invoice.risk_explanation}
-          evidence={evidence}
+          currentSituation={invoice.riskSummary.currentSituation}
+          daysOverdue={invoice.riskSummary.daysOverdue}
+          rejectedChecksCount={invoice.riskSummary.rejectedChecksCount}
+          rejectedChecksAmount={invoice.riskSummary.rejectedChecksAmount}
+          historicalTrend={invoice.riskSummary.historicalTrend}
+          deterministicSignals={invoice.riskSummary.deterministicSignals}
+          narrativeSource={invoice.riskSummary.narrativeSource}
+          evidence={invoice.riskSummary.evidence}
         />
       ) : null}
 
-      {invoice.token_hash && invoice.net_amount !== null && invoice.total_fractions ? (
+      {invoice.tokenizationStatus.tokenHash && invoice.tokenizationStatus.totalFractions ? (
         <TokenizationSummary
-          tokenHash={invoice.token_hash}
-          netAmount={Number(invoice.net_amount)}
-          totalFractions={invoice.total_fractions}
+          autoPublishedToFunding={invoice.tokenizationStatus.autoPublishedToFunding}
+          tokenHash={invoice.tokenizationStatus.tokenHash}
+          netAmount={invoice.tokenizationStatus.netAmount}
+          totalFractions={invoice.tokenizationStatus.totalFractions}
         />
       ) : null}
 

@@ -1,4 +1,4 @@
-const statuses = ['draft', 'validating', 'validated', 'tokenized', 'funding'] as const;
+const statuses = ['draft', 'validating', 'validated', 'tokenized', 'funding', 'funded', 'settling', 'settled'] as const;
 
 const labels: Record<(typeof statuses)[number], string> = {
   draft: 'Draft',
@@ -6,6 +6,9 @@ const labels: Record<(typeof statuses)[number], string> = {
   validated: 'Validated',
   tokenized: 'Tokenized',
   funding: 'Funding',
+  funded: 'Funded',
+  settling: 'Settling',
+  settled: 'Settled',
 };
 
 export function InvoiceStatusStepper({ currentStatus }: { currentStatus: string }) {
@@ -15,7 +18,7 @@ export function InvoiceStatusStepper({ currentStatus }: { currentStatus: string 
   return (
     <section className="rounded-3xl border border-white/10 bg-slate-950/50 p-6">
       <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Estado de lifecycle</p>
-      <div className="mt-5 grid gap-4 md:grid-cols-5">
+      <div className="mt-5 grid gap-4 md:grid-cols-4 xl:grid-cols-8">
         {statuses.map((status, index) => {
           const isActive = index <= resolvedIndex;
           return (

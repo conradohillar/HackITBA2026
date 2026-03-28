@@ -1,6 +1,6 @@
 # Phase 1 Validation: Foundation & Auth
 
-**Status:** Local validation passed; deployed Vercel verification blocked by missing Karaí project linkage and CLI auth
+**Status:** Local validation passed; deployed Vercel build successful (READY state); deployed verification blocked by Vercel Authentication protection setting (human-only blocker)
 **Phase:** `01-foundation-auth`
 **Purpose:** Nyquist + execution validation target for Phase 1 requirements and success criteria.
 
@@ -24,9 +24,16 @@
 
 ## Deployed Checks
 
-- ⛔ `vercel whoami` failed with `No existing credentials found. Please run vercel login or pass --token`.
-- ⛔ `Vercel_list_teams` returned accessible teams, but `Vercel_list_projects` showed no Karaí-linked project in those teams and the repo still has no `.vercel/project.json`.
-- ⛔ No deployed URL is available from this workspace, so deployed `/api/health` and deployed Playwright auth/RBAC checks could not be executed.
+- ✅ Vercel project created and linked to GitHub (`fardenghi/HackITBA2026`)
+- ✅ Deployment successful: `karai-8s2nfkkyk-fardenghis-projects.vercel.app` (state: READY)
+- ✅ Build logs confirm all routes compiled: `/api/health`, `/auth/confirm`, `/cedente/*`, `/inversor/*`, auth flows
+- ⛔ **HUMAN-ONLY BLOCKER:** Vercel Authentication (ssoProtection) is enabled on the deployment, blocking all HTTP access (API and pages). 
+  - Attempted access to `/api/health` → 401/403 requiring Vercel SSO authentication
+  - Attempted access to `/` → 401/403 requiring Vercel SSO authentication
+  - **Resolution needed:** Disable Vercel Authentication in [Vercel Project Settings](https://vercel.com/docs/deployment-protection/methods-to-protect-deployments/vercel-authentication)
+    - Go to Vercel dashboard → Project → Settings → Deployment Protection
+    - Disable "Vercel Authentication" or set it to preview-only
+    - This will allow public access to test `/api/health` and Playwright auth/RBAC flows on production URL
 
 ## Notes
 

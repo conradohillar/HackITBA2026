@@ -90,7 +90,7 @@ Plans:
 Plans:
 - [x] 03-01-PLAN.md — Define marketplace contracts, expected-return math, and investor funding queries
 - [x] 03-02-PLAN.md — Add the DB-enforced `fund_invoice()` boundary, locking, and publication enablement
-- [ ] 03-03-PLAN.md — Wire purchase actions, realtime subscriptions, and polling fallback primitives
+- [x] 03-03-PLAN.md — Wire purchase actions, realtime subscriptions, and polling fallback primitives
 - [ ] 03-04-PLAN.md — Build the investor marketplace landing, detail route, and fraction purchase UI
 - [ ] 03-05-PLAN.md — Verify the Phase 3 happy path with Vitest plus desktop/mobile Playwright coverage
 

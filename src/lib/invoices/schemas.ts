@@ -42,6 +42,7 @@ export const invoiceOriginationSchema = z
   });
 
 export type InvoiceOriginationInput = z.infer<typeof invoiceOriginationSchema>;
+export type InvoiceOriginationFormInput = z.input<typeof invoiceOriginationSchema>;
 
 function formatMoney(value: number) {
   return value.toFixed(2);

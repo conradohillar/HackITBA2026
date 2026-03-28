@@ -101,11 +101,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | RISK-04 | Phase 2: Invoice Origination & Risk Engine | Completed |
 | RISK-05 | Phase 2: Invoice Origination & Risk Engine | Completed |
 | RISK-06 | Phase 2: Invoice Origination & Risk Engine | Completed |
-| FUND-01 | Phase 3: Marketplace & Funding | Not started |
-| FUND-02 | Phase 3: Marketplace & Funding | Not started |
-| FUND-03 | Phase 3: Marketplace & Funding | Not started |
-| FUND-04 | Phase 3: Marketplace & Funding | Not started |
-| FUND-05 | Phase 3: Marketplace & Funding | Not started |
+| FUND-01 | Phase 3: Marketplace & Funding | Completed |
+| FUND-02 | Phase 3: Marketplace & Funding | Completed |
+| FUND-03 | Phase 3: Marketplace & Funding | Completed |
+| FUND-04 | Phase 3: Marketplace & Funding | Completed |
+| FUND-05 | Phase 3: Marketplace & Funding | Completed |
 | SETT-01 | Phase 4: Settlement, Dashboards & Demo Polish | Not started |
 | SETT-02 | Phase 4: Settlement, Dashboards & Demo Polish | Not started |
 | SETT-03 | Phase 4: Settlement, Dashboards & Demo Polish | Not started |
@@ -123,4 +123,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-03-28*
-*Last updated: 2026-03-28 after Phase 2 execution*
+*Last updated: 2026-03-28 after Phase 3 execution*

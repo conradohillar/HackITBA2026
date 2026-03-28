@@ -92,7 +92,7 @@ Plans:
 - [x] 03-02-PLAN.md — Add the DB-enforced `fund_invoice()` boundary, locking, and publication enablement
 - [x] 03-03-PLAN.md — Wire purchase actions, realtime subscriptions, and polling fallback primitives
 - [x] 03-04-PLAN.md — Build the investor marketplace landing, detail route, and fraction purchase UI
-- [ ] 03-05-PLAN.md — Verify the Phase 3 happy path with Vitest plus desktop/mobile Playwright coverage
+- [x] 03-05-PLAN.md — Verify the Phase 3 happy path with Vitest plus desktop/mobile Playwright coverage
 
 **Notes:**
 - `fund_invoice()` PostgreSQL function is the correctness boundary — application code never does read-then-write

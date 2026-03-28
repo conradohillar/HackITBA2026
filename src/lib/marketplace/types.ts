@@ -4,6 +4,7 @@ export type MarketplaceInvoiceCard = {
   id: string;
   invoiceNumber: string;
   pagadorName: string;
+  payerCuit: string;
   amount: number;
   netAmount: number;
   riskTier: RiskTier;
@@ -11,13 +12,15 @@ export type MarketplaceInvoiceCard = {
   totalFractions: number;
   fundedFractions: number;
   availableFractions: number;
+  daysToMaturity: number;
+  perFractionNetAmount: number;
+  perFractionExpectedReturn: number;
+  progressPercentage: number;
   dueDate: string;
 };
 
 export type InvoiceFundingSnapshot = MarketplaceInvoiceCard & {
   availableFractionIds: string[];
-  perFractionNetAmount: number;
-  perFractionExpectedReturn: number;
 };
 
 export type MarketplacePurchaseSummary = {

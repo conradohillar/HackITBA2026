@@ -18,7 +18,7 @@ function createDefaultDependencies(): QueryDependencies {
       const { data } = await supabase
         .from('invoices')
         .select(
-          'id, status, invoice_number, pagador_name, amount, net_amount, risk_tier, discount_rate, total_fractions, funded_fractions, due_date',
+          'id, status, invoice_number, pagador_name, pagador_cuit, amount, net_amount, risk_tier, discount_rate, total_fractions, funded_fractions, due_date',
         )
         .in('status', ['funding', 'funded'])
         .order('due_date', { ascending: true });
@@ -30,7 +30,7 @@ function createDefaultDependencies(): QueryDependencies {
       const { data } = await supabase
         .from('invoices')
         .select(
-          'id, status, invoice_number, pagador_name, amount, net_amount, risk_tier, discount_rate, total_fractions, funded_fractions, due_date',
+          'id, status, invoice_number, pagador_name, pagador_cuit, amount, net_amount, risk_tier, discount_rate, total_fractions, funded_fractions, due_date',
         )
         .eq('id', invoiceId)
         .in('status', ['funding', 'funded'])

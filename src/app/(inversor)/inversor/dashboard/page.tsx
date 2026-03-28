@@ -1,3 +1,4 @@
+import { logoutAction } from '@/lib/auth/actions';
 import { getCurrentAuthState } from '@/lib/auth/session';
 import { MetricCard } from '@/components/dashboard/metric-card';
 import { PortfolioBreakdown } from '@/components/dashboard/portfolio-breakdown';
@@ -23,7 +24,11 @@ export default async function InversorDashboardPage() {
         <div className="grid gap-4 md:grid-cols-3">
           <div className="rounded-2xl border border-white/10 bg-slate-950/50 p-5 text-slate-300">Holdings visibles en funding, funded, settling y settled.</div>
           <div className="rounded-2xl border border-white/10 bg-slate-950/50 p-5 text-slate-300">Yield promedio ponderado y mix por pagador calculados con datos persistidos.</div>
-          <div className="rounded-2xl border border-white/10 bg-slate-950/50 p-5 text-slate-300">El marketplace sigue vivo abajo para seguir comprando sin cambiar de ruta.</div>
+          <form action={logoutAction}>
+            <button className="w-full rounded-2xl bg-white px-5 py-5 font-semibold text-slate-950" type="submit">
+              Cerrar sesión
+            </button>
+          </form>
         </div>
       </DashboardHero>
 

@@ -59,6 +59,7 @@ describe('events append-only invariants', () => {
         pagador_cuit: '30712345678',
         pagador_name: 'YPF SA',
         invoice_number: `FAC-${randomUUID()}`,
+        description: 'Abono mensual de mantenimiento',
         amount: '990000.00',
         issue_date: '2026-03-28',
         due_date: '2026-06-28',

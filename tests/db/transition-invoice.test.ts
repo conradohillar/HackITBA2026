@@ -59,6 +59,7 @@ describe('invoice transition invariants', () => {
         pagador_cuit: '30712345678',
         pagador_name: 'Techint SA',
         invoice_number: `FAC-${randomUUID()}`,
+        description: 'Servicios de consultoria Marzo 2026',
         amount: '1500000.00',
         issue_date: '2026-03-28',
         due_date: '2026-06-28',

@@ -255,10 +255,11 @@ describe('Phase 3 fund_invoice boundary', () => {
       total_fractions: 3,
     });
     expect(invoice?.funded_at).toBeTruthy();
-    expect(transactions).toHaveLength(3);
-    expect(transactions?.every((entry) => entry.type === 'fraction_purchase')).toBe(true);
+    expect(transactions).toHaveLength(4);
+    expect(transactions?.filter((entry) => entry.type === 'fraction_purchase')).toHaveLength(3);
+    expect(transactions?.filter((entry) => entry.type === 'disbursement_to_cedente')).toHaveLength(1);
     expect(transactions?.every((entry) => entry.invoice_id === invoiceId)).toBe(true);
-    expect(transactions?.every((entry) => entry.fraction_id)).toBe(true);
+    expect(transactions?.filter((entry) => entry.type === 'fraction_purchase').every((entry) => entry.fraction_id)).toBe(true);
     expect(transactions?.every((entry) => entry.to_user_id === cedente.id)).toBe(true);
   });
 });

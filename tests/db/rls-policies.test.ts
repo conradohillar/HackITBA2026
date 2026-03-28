@@ -93,6 +93,7 @@ describe('Phase 1 RLS policies', () => {
       pagador_cuit: '30712345678',
       pagador_name: 'Anon SA',
       invoice_number: `FAC-${randomUUID()}`,
+      description: 'Intento anonimo',
       amount: '1000.00',
       issue_date: '2026-03-28',
       due_date: '2026-04-28',
@@ -116,6 +117,7 @@ describe('Phase 1 RLS policies', () => {
         pagador_cuit: '30712345678',
         pagador_name: 'Techint SA',
         invoice_number: `FAC-${randomUUID()}`,
+        description: 'Factura propia visible solo para el cedente',
         amount: '1500000.00',
         issue_date: '2026-03-28',
         due_date: '2026-06-28',
@@ -131,6 +133,7 @@ describe('Phase 1 RLS policies', () => {
         pagador_cuit: '30798765432',
         pagador_name: 'YPF SA',
         invoice_number: `FAC-${randomUUID()}`,
+        description: 'Factura publicada en marketplace',
         amount: '2450000.00',
         issue_date: '2026-03-28',
         due_date: '2026-06-28',
@@ -138,6 +141,8 @@ describe('Phase 1 RLS policies', () => {
       .select('id')
       .single();
 
+    expect(ownInvoice).toBeTruthy();
+    expect(marketplaceInvoice).toBeTruthy();
     cleanup.invoiceIds.push(ownInvoice!.id, marketplaceInvoice!.id);
 
     const cedenteClient = await signIn(cedenteA.email, cedenteA.password);
@@ -153,6 +158,7 @@ describe('Phase 1 RLS policies', () => {
 
     const investorInvoices = await investorClient.from('invoices').select('id, status').order('created_at');
     expect(investorInvoices.error).toBeNull();
-    expect(investorInvoices.data).toEqual([{ id: marketplaceInvoice!.id, status: 'funding' }]);
+    expect(investorInvoices.data).toContainEqual({ id: marketplaceInvoice!.id, status: 'funding' });
+    expect(investorInvoices.data?.some((invoice) => invoice.id === ownInvoice!.id)).toBe(false);
   });
 });

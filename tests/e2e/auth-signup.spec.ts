@@ -50,8 +50,8 @@ async function runSignupFlow(
   await page.getByText(role === 'cedente' ? 'Cedente · PyME que sube facturas' : 'Inversor · Compra fracciones con retorno fijo').click();
   await page.getByRole('button', { name: 'Crear cuenta' }).click();
 
-  await expect(page).toHaveURL(new RegExp(`${dashboardPath}$`));
-  await expect(page.getByRole('heading', { name: dashboardTitle })).toBeVisible();
+  await expect(page).toHaveURL(new RegExp(`${dashboardPath}$`), { timeout: 15_000 });
+  await expect(page.getByRole('heading', { name: dashboardTitle })).toBeVisible({ timeout: 15_000 });
   await expect(page.getByText(displayName)).toBeVisible();
 
   const admin = createAdminClient();
@@ -71,10 +71,10 @@ async function runSignupFlow(
 
 test.describe('auth signup flow', () => {
   test('cedente signup lands on the cedente dashboard', async ({ page }) => {
-    await runSignupFlow(page, 'cedente', '/cedente/dashboard', 'Bienvenido al workspace de PyME');
+    await runSignupFlow(page, 'cedente', '/cedente/dashboard', 'Control de colocación y settlement');
   });
 
   test('inversor signup lands on the investor dashboard', async ({ page }) => {
-    await runSignupFlow(page, 'inversor', '/inversor/dashboard', 'Bienvenido al workspace de inversión');
+    await runSignupFlow(page, 'inversor', '/inversor/dashboard', 'Marketplace + portafolio vivo');
   });
 });

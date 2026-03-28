@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: Phase 4 planning next
-status: ready_for_phase_4
-stopped_at: Completed 03-marketplace-funding-05-PLAN.md
-last_updated: "2026-03-28T10:59:30.000Z"
+current_plan: Phase 4 Plan 02
+status: in_progress
+stopped_at: Completed 04-01-PLAN.md
+last_updated: "2026-03-28T11:27:46Z"
 progress:
   total_phases: 4
   completed_phases: 3
-  total_plans: 16
-  completed_plans: 16
+  total_plans: 21
+  completed_plans: 17
 ---
 
 # Project State: Karaí
@@ -23,10 +23,10 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 
 ## Current Status
 
-- **Phase:** 3 — Marketplace & Funding
-- **Status:** Completed
+- **Phase:** 4 — Settlement, Dashboards & Demo Polish
+- **Status:** In Progress
 - **Milestone:** v1
-- **Current plan:** Phase 4 planning next
+- **Current plan:** Phase 4 Plan 02
 
 ## Phase Progress
 
@@ -35,7 +35,7 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 | 1 | Foundation & Auth | Completed |
 | 2 | Invoice Origination & Risk Engine | Completed |
 | 3 | Marketplace & Funding | Completed |
-| 4 | Settlement, Dashboards & Demo Polish | Ready to start |
+| 4 | Settlement, Dashboards & Demo Polish | In Progress |
 
 ## Recent Activity
 
@@ -50,6 +50,7 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 - 2026-03-28 Phase 3 Plan 03 completed (purchase action, realtime fallback hook, shared funding widgets)
 - 2026-03-28 Phase 3 Plan 04 completed (investor marketplace landing, detail page, purchase flow)
 - 2026-03-28 Phase 3 Plan 05 completed (desktop/mobile validation, MCP checks, fallback hardening)
+- 2026-03-28 Phase 4 Plan 01 completed (settlement contracts, DB settlement RPC, disbursement backfill, regression coverage)
 
 ## Decisions
 
@@ -66,6 +67,9 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 - 2026-03-28 Shared marketplace read-model serialization now powers both server queries and browser polling refreshes.
 - 2026-03-28 Investor detail pages can stay live with typed funding snapshots while purchases submit through the server action boundary.
 - 2026-03-28 Marketplace realtime views now auto-fallback to polling if a channel never reaches `SUBSCRIBED`.
+- [Phase 04]: Settlement remains a single Supabase RPC so invoice transitions, row locks, and ledger writes stay atomic.
+- [Phase 04]: fund_invoice() now emits the cedente disbursement at 100% funding and settle_invoice() backfills it only for historical funded invoices missing that ledger row.
+- [Phase 04]: Settlement interest allocation gives the final locked fraction the cent-level remainder so payout totals always equal the invoice spread.
 
 ## Performance Metrics
 
@@ -74,11 +78,12 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 - 2026-03-28 — Phase `03-marketplace-funding` Plan `03` — duration `8min` — tasks `2` — files `6`
 - 2026-03-28 — Phase `03-marketplace-funding` Plan `04` — duration `5min` — tasks `2` — files `8`
 - 2026-03-28 — Phase `03-marketplace-funding` Plan `05` — duration `16min` — tasks `2` — files `5`
+- 2026-03-28 — Phase `04-settlement-dashboards-demo-polish` Plan `01` — duration `10min` — tasks `3` — files `6`
 
 ## Session
 
-- **Last session:** 2026-03-28T10:59:30.000Z
-- **Stopped At:** Completed 03-marketplace-funding-05-PLAN.md
+- **Last session:** 2026-03-28T11:28:51.227Z
+- **Stopped At:** Completed 04-01-PLAN.md
 
 ## Current Readiness
 
@@ -90,8 +95,10 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 - Phase 3 Plan 04 summary: `.planning/phases/03-marketplace-funding/03-04-SUMMARY.md`
 - Phase 3 Plan 05 summary: `.planning/phases/03-marketplace-funding/03-05-SUMMARY.md`
 - Phase 3 validation artifact: `.planning/phases/03-marketplace-funding/03-VALIDATION.md`
-- Phase 4 can proceed without human input, but it still needs planning artifacts because no `04-*` plans exist yet.
+- Phase 4 Plan 01 summary: `.planning/phases/04-settlement-dashboards-demo-polish/04-01-SUMMARY.md`
+- Phase 4 settlement boundary is live: `public.settle_invoice()` now transitions `funded -> settling -> settled`, writes settlement ledger rows, and backfills missing cedente disbursements safely.
+- `public.fund_invoice()` now inserts exactly one `disbursement_to_cedente` row when funding reaches 100%.
 - Known external caveat: live BCRA probe paths still return 404 from this environment, so the happy path intentionally uses the pre-warmed cache + deterministic engine.
 
 ---
-*Last updated: 2026-03-28 after Phase 3 completion*
+*Last updated: 2026-03-28 after Phase 4 Plan 01 completion*

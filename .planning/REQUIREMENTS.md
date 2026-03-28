@@ -34,9 +34,9 @@ Requirements for hackathon demo. Each maps to roadmap phases.
 
 ### Settlement & Distribution
 
-- [ ] **SETT-01**: System tracks invoice maturity dates and triggers settlement simulation
-- [ ] **SETT-02**: Upon settlement, system distributes principal + interest pro-rata to fraction holders
-- [ ] **SETT-03**: User can view transaction history (investments, returns, disbursements)
+- [x] **SETT-01**: System tracks invoice maturity dates and triggers settlement simulation
+- [x] **SETT-02**: Upon settlement, system distributes principal + interest pro-rata to fraction holders
+- [x] **SETT-03**: User can view transaction history (investments, returns, disbursements)
 
 ### User Management
 
@@ -106,9 +106,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FUND-03 | Phase 3: Marketplace & Funding | Completed |
 | FUND-04 | Phase 3: Marketplace & Funding | Completed |
 | FUND-05 | Phase 3: Marketplace & Funding | Completed |
-| SETT-01 | Phase 4: Settlement, Dashboards & Demo Polish | Not started |
-| SETT-02 | Phase 4: Settlement, Dashboards & Demo Polish | Not started |
-| SETT-03 | Phase 4: Settlement, Dashboards & Demo Polish | Not started |
+| SETT-01 | Phase 4: Settlement, Dashboards & Demo Polish | Completed |
+| SETT-02 | Phase 4: Settlement, Dashboards & Demo Polish | Completed |
+| SETT-03 | Phase 4: Settlement, Dashboards & Demo Polish | Completed |
 | USER-01 | Phase 1: Foundation & Auth | Completed |
 | USER-02 | Phase 4: Settlement, Dashboards & Demo Polish | Not started |
 | USER-03 | Phase 4: Settlement, Dashboards & Demo Polish | Not started |
@@ -123,4 +123,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-03-28*
-*Last updated: 2026-03-28 after Phase 3 execution*
+*Last updated: 2026-03-28 after Phase 4 Plan 01 execution*

@@ -112,7 +112,14 @@ Plans:
 4. Invoice detail page displays visual event timeline from creation through settlement (all state transitions + financial events)
 5. Full happy path runs end-to-end on Vercel: signup → upload invoice → risk score → tokenize → fund → settle → see returns
 
-**Plans:** (populated during planning)
+**Plans:** 5 plans
+
+Plans:
+- [x] 04-01-PLAN.md — Add the DB-backed settlement/disbursement boundary and settlement action with regression coverage
+- [ ] 04-02-PLAN.md — Build the server read models for settlement timelines, dashboard metrics, and transaction history
+- [ ] 04-03-PLAN.md — Upgrade both invoice detail routes with the full lifecycle timeline, settlement UI, and history
+- [ ] 04-04-PLAN.md — Replace the placeholder dashboards with role-specific metrics, holdings, diversification, and ledger history
+- [ ] 04-05-PLAN.md — Verify the full desktop/mobile happy path locally and on Vercel when accessible, with explicit local fallback rules
 
 **Notes:**
 - Demo readiness is the exit gate — happy path on Vercel by hour 26

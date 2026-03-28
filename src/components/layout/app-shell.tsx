@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { logoutAction } from '@/lib/auth/actions';
 import { getCurrentAuthState, getDashboardPathForRole } from '@/lib/auth/session';
+import { AppShellNav } from '@/components/layout/app-shell-nav';
 
 type AppShellProps = {
   children: React.ReactNode;
@@ -9,6 +10,11 @@ type AppShellProps = {
 export async function AppShell({ children }: AppShellProps) {
   const { user, profile } = await getCurrentAuthState();
   const dashboardHref = profile ? getDashboardPathForRole(profile.role) : '/signup';
+  const contextLabel = !profile
+    ? 'demo publico'
+    : profile.role === 'cedente'
+      ? 'operacion cedente'
+      : 'mesa inversora';
 
   return (
     <div className="min-h-screen">
@@ -22,18 +28,12 @@ export async function AppShell({ children }: AppShellProps) {
           </Link>
 
           <nav className="flex flex-wrap items-center gap-3 text-sm text-slate-200">
-            <Link className="rounded-full border border-white/10 px-4 py-2 transition hover:border-emerald-300/40 hover:bg-white/5" href="/">
-              Inicio
-            </Link>
-            <Link className="rounded-full border border-white/10 px-4 py-2 transition hover:border-emerald-300/40 hover:bg-white/5" href="/login">
-              Ingresar
-            </Link>
-            <Link className="rounded-full border border-white/10 px-4 py-2 transition hover:border-emerald-300/40 hover:bg-white/5" href="/signup">
-              Crear cuenta
-            </Link>
-            <Link className="rounded-full bg-emerald-300 px-4 py-2 font-semibold text-slate-950 transition hover:bg-emerald-200" href={dashboardHref}>
-              {user && profile ? (profile.role === 'cedente' ? 'Panel cedente' : 'Panel inversor') : 'Ver demo'}
-            </Link>
+            <AppShellNav isAuthenticated={Boolean(user && profile)} role={profile?.role ?? null} />
+            {!user ? (
+              <Link className="rounded-full border border-white/10 px-4 py-2 transition hover:border-emerald-300/40 hover:bg-white/5" href={dashboardHref}>
+                Ver demo
+              </Link>
+            ) : null}
             {user ? (
               <form action={logoutAction}>
                 <button className="rounded-full border border-white/10 px-4 py-2 transition hover:bg-white/5" type="submit">
@@ -44,7 +44,7 @@ export async function AppShell({ children }: AppShellProps) {
           </nav>
 
           <p className="text-xs uppercase tracking-[0.28em] text-slate-400">
-            AI credit scoring · tokenizacion automatica · cheques navegables
+            {contextLabel} · ai credit scoring · cheques navegables
           </p>
         </div>
       </header>

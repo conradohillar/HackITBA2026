@@ -54,6 +54,21 @@ Requirements for hackathon demo. Each maps to roadmap phases.
 
 Deferred beyond hackathon. Tracked but not in current roadmap.
 
+## Phase 5 Expansion Requirements
+
+Post-v1 polish and positioning work added after the original demo milestone.
+
+### AI Risk Experience
+
+- [x] **AI-01**: Cedente invoice detail shows structured BCRA risk facts (situación actual, días de atraso, tendencia histórica, cheques rechazados) — Validated in Phase 5
+- [x] **AI-02**: Risk narrative UI shows whether the explanation came from the LLM or deterministic fallback while keeping deterministic tier/rate authoritative — Validated in Phase 5
+
+### UX / Navigation
+
+- [x] **UX-01**: Cedente origination flow communicates automatic tokenization/funding handoff in the same submit journey without a second manual tokenization step — Validated in Phase 5
+- [x] **UX-02**: Investor marketplace uses cheque-centric cards/details with visible tasa, vencimiento, fracciones disponibles, and per-fraction economics — Validated in Phase 5
+- [x] **UX-03**: Investor dashboard highlights portfolio stats beyond holdings count, including retorno esperado abierto, retorno realizado, and concentración del principal por pagador — Validated in Phase 5
+
 ### Notifications
 
 - **NOTF-01**: User receives in-app notifications for funding milestones
@@ -115,10 +130,16 @@ Which phases cover which requirements. Updated during roadmap creation.
 | USER-04 | Phase 1: Foundation & Auth | Completed |
 | AUDIT-01 | Phase 1: Foundation & Auth | Completed |
 | AUDIT-02 | Phase 4: Settlement, Dashboards & Demo Polish | Completed |
+| AI-01 | Phase 5: IA risk + UX polish | Completed |
+| AI-02 | Phase 5: IA risk + UX polish | Completed |
+| UX-01 | Phase 5: IA risk + UX polish | Completed |
+| UX-02 | Phase 5: IA risk + UX polish | Completed |
+| UX-03 | Phase 5: IA risk + UX polish | Completed |
 
 **Coverage:**
 - v1 requirements: 25 total
-- Mapped to phases: 25
+- Phase 5 expansion requirements: 5 total
+- Mapped to phases: 30
 - Unmapped: 0 ✅
 
 ---

@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: Phase 1 Deployed Validation Complete
-status: All 21 plans complete. Phase 1 deployed build verified successful on Vercel. Ready to archive v1 milestone.
-stopped_at: Completed 01-06-PLAN.md retroactively after Phase 4 closure
-last_updated: "2026-03-28T12:45:00.000Z"
+current_plan: Phase 05 Complete
+status: completed
+stopped_at: Completed 05-04-PLAN.md and Phase 05 verification
+last_updated: "2026-03-28T15:18:00.000Z"
 progress:
-  total_phases: 4
-  completed_phases: 4
-  total_plans: 21
-  completed_plans: 21
+  total_phases: 5
+  completed_phases: 5
+  total_plans: 25
+  completed_plans: 25
 ---
 
 # Project State: Karaí
@@ -19,14 +19,14 @@ progress:
 
 See: .planning/PROJECT.md (updated 2026-03-28)
 **Core value:** El happy path completo funciona de punta a punta en la demo: PyME sube factura → se evalúa riesgo con BCRA + IA → inversores fondean fracciones → plataforma liquida y distribuye capital + intereses.
-**Current focus:** Phase 4
+**Current focus:** Milestone complete — Phase 05 verified
 
 ## Current Status
 
-- **Phase:** 4 — Settlement, Dashboards & Demo Polish
-- **Status:** Phase 4 remains complete; Phase 1 Plan 06 was revalidated locally and is still externally blocked on deployed Vercel linkage/auth
+- **Phase:** 05 — Integrar IA para riesgo crediticio y mejorar UX/UI navegable con cheques, tasas, stats de inversor y tokenizacion automatica
+- **Status:** Milestone complete
 - **Milestone:** v1
-- **Current plan:** Phase 4 Complete
+- **Current plan:** Phase 05 Complete
 
 ## Phase Progress
 
@@ -36,6 +36,13 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 | 2 | Invoice Origination & Risk Engine | Completed |
 | 3 | Marketplace & Funding | Completed |
 | 4 | Settlement, Dashboards & Demo Polish | Completed |
+| 5 | IA Risk + UX Polish | Completed |
+
+## Accumulated Context
+
+### Roadmap Evolution
+
+- Phase 5 added: Integrar IA para riesgo crediticio y mejorar UX/UI navegable con cheques, tasas, stats de inversor y tokenizacion automatica
 
 ## Recent Activity
 
@@ -57,6 +64,10 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 - 2026-03-28 Phase 4 Plan 05 completed (desktop/mobile phase gate, MCP verification, documented Vercel fallback)
 - 2026-03-28 Phase 1 Plan 06 completed retroactively (full local revalidation rerun, auth test refresh, investor logout parity, deployed blocker re-documented)
 - 2026-03-28 Phase 1 deployed validation completed (Vercel project linked to GitHub, application code deployed successfully to production, all routes compiled and verified)
+- 2026-03-28 Phase 5 Plan 01 completed (structured cedente risk facts and automatic tokenization detail messaging)
+- 2026-03-28 Phase 5 Plan 02 completed (investor analytics and cheque contract expansion in the query layer)
+- 2026-03-28 Phase 5 Plan 03 completed (cheque-style investor dashboard/detail polish and reusable fact presenters)
+- 2026-03-28 Phase 5 Plan 04 completed (desktop/mobile validation gate plus requirement-level evidence)
 
 ## Decisions
 
@@ -80,6 +91,9 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 - [Phase 04]: Settlement dashboards and detail views now share one server read-model that normalizes events plus transactions into audited timeline items.
 - [Phase 04]: Invoice detail and dashboard routes stay stable while layering settlement summaries, transaction history, and post-purchase holdings onto the existing role surfaces.
 - [Phase 04]: Phase 4 validation relies on one deterministic desktop/mobile Playwright happy path, plus MCP corroboration and an explicit Vercel fallback when linkage or auth is missing.
+- [Phase 05]: Cedente detail risk UI reads only persisted `bcra_data` facts and exposes provenance without recomputing scoring on the client.
+- [Phase 05]: Investor cheque cards and detail routes share one facts component plus one enriched marketplace contract so SSR and refresh paths stay aligned.
+- [Phase 05]: Phase 5 validation uses one deterministic desktop/mobile Playwright flow; MCP remained unavailable in this runtime so repeated CLI browser replays were documented as fallback evidence.
 
 ## Performance Metrics
 
@@ -94,11 +108,15 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 - 2026-03-28 — Phase `04-settlement-dashboards-demo-polish` Plan `04` — duration `8min` — tasks `2` — files `5`
 - 2026-03-28 — Phase `04-settlement-dashboards-demo-polish` Plan `05` — duration `24min` — tasks `2` — files `4`
 - 2026-03-28 — Phase `01-foundation-auth` Plan `06` — duration `15min` — tasks `2` — files `8`
+- 2026-03-28 — Phase `05-ia-risk-ux-polish` Plan `01` — duration `8min` — tasks `2` — files `5`
+- 2026-03-28 — Phase `05-ia-risk-ux-polish` Plan `02` — duration `7min` — tasks `2` — files `7`
+- 2026-03-28 — Phase `05-ia-risk-ux-polish` Plan `03` — duration `8min` — tasks `2` — files `7`
+- 2026-03-28 — Phase `05-ia-risk-ux-polish` Plan `04` — duration `20min` — tasks `2` — files `4`
 
 ## Session
 
 - **Last session:** 2026-03-28T12:01:55.980Z
-- **Stopped At:** Phase 1 deployed validation complete - ready for milestone archival
+- **Stopped At:** Completed 05-04-PLAN.md and Phase 05 verification
 - **Deployment URL:** `https://karai-8s2nfkkyk-fardenghis-projects.vercel.app/` (READY state)
 
 ## Current Readiness
@@ -127,6 +145,10 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 - Local Phase 1 desktop/mobile auth and RBAC gate now passes again after refreshing outdated dashboard assertions and restoring investor logout parity.
 - Vercel deployment now verified: GitHub integration connected, application builds successfully to READY state, all routes compiled and deployed.
 - Phase 1 v1.0 milestone ready for archival: all 21 plans complete, local validation complete, deployed build verified successful.
+- Phase 5 summaries: `.planning/phases/05-integrar-ia-para-riesgo-crediticio-y-mejorar-ux-ui-navegable-con-cheques-tasas-stats-de-inversor-y-tokenizacion-automatica/05-01-SUMMARY.md`, `.planning/phases/05-integrar-ia-para-riesgo-crediticio-y-mejorar-ux-ui-navegable-con-cheques-tasas-stats-de-inversor-y-tokenizacion-automatica/05-02-SUMMARY.md`, `.planning/phases/05-integrar-ia-para-riesgo-crediticio-y-mejorar-ux-ui-navegable-con-cheques-tasas-stats-de-inversor-y-tokenizacion-automatica/05-03-SUMMARY.md`, `.planning/phases/05-integrar-ia-para-riesgo-crediticio-y-mejorar-ux-ui-navegable-con-cheques-tasas-stats-de-inversor-y-tokenizacion-automatica/05-04-SUMMARY.md`
+- Phase 5 validation artifact: `.planning/phases/05-integrar-ia-para-riesgo-crediticio-y-mejorar-ux-ui-navegable-con-cheques-tasas-stats-de-inversor-y-tokenizacion-automatica/05-VALIDATION.md`
+- Phase 5 verification artifact: `.planning/phases/05-integrar-ia-para-riesgo-crediticio-y-mejorar-ux-ui-navegable-con-cheques-tasas-stats-de-inversor-y-tokenizacion-automatica/05-VERIFICATION.md`
+- Local Phase 5 desktop/mobile gate passed end-to-end; Playwright MCP remained unavailable in this runtime, so repeated CLI browser replays were used as the documented fallback.
 
 ---
-*Last updated: 2026-03-28 after Phase 1 deployed validation completion and Vercel linkage*
+*Last updated: 2026-03-28 after Phase 05 completion and validation*

@@ -12,8 +12,9 @@
 | 2 | Invoice Origination & Risk Engine | Invoice upload → BCRA scoring → tokenization → fractionalization | INV-01, INV-03, INV-05, RISK-01, RISK-02, RISK-03, RISK-04, RISK-05, RISK-06 | 5 |
 | 3 | Marketplace & Funding | Investors browse, purchase fractions, watch funding progress live | FUND-01, FUND-02, FUND-03, FUND-04, FUND-05 | 5 |
 | 4 | Settlement, Dashboards & Demo Polish | Close the loop: settlement, dashboards, event timeline, demo-ready UX | INV-04, SETT-01, SETT-02, SETT-03, USER-02, USER-03, AUDIT-02 | 5 |
+| 5 | IA Risk + UX Polish | Make risk explainability and investor navigation feel demo-premium without changing the core money flow | AI-01, AI-02, UX-01, UX-02, UX-03 | 5 |
 
-**Total:** 4 phases · 25 requirements mapped · 19 success criteria
+**Total:** 5 phases · 30 requirements mapped · 24 success criteria
 
 ## Phase Details
 
@@ -131,7 +132,7 @@ Plans:
 
 ## Coverage Validation
 
-All 25 v1 requirements mapped to exactly one phase:
+All 30 mapped requirements point to exactly one phase:
 
 | Requirement | Phase | Category |
 |-------------|-------|----------|
@@ -160,8 +161,34 @@ All 25 v1 requirements mapped to exactly one phase:
 | USER-04 | 1 | User Management |
 | AUDIT-01 | 1 | Observability / Audit |
 | AUDIT-02 | 4 | Observability / Audit |
+| AI-01 | 5 | AI Risk Experience |
+| AI-02 | 5 | AI Risk Experience |
+| UX-01 | 5 | UX / Navigation |
+| UX-02 | 5 | UX / Navigation |
+| UX-03 | 5 | UX / Navigation |
 
 **Unmapped:** 0
+
+### Phase 5: Integrar IA para riesgo crediticio y mejorar UX/UI navegable con cheques, tasas, stats de inversor y tokenizacion automatica
+
+**Goal:** Make Karaí feel like a polished financing product: expose structured AI/BCRA risk evidence, clarify the automatic tokenization handoff for cedentes, and upgrade investor navigation with cheque-style cards plus richer portfolio stats.
+**Requirements:** AI-01, AI-02, UX-01, UX-02, UX-03
+**Depends on:** Phase 4
+
+**Success Criteria:**
+1. After origination, the cedente detail route shows structured BCRA facts (situación, atraso, historial, cheques) plus narrative provenance without recomputing risk in the browser
+2. The origination flow clearly communicates that tokenization and marketplace publication happened automatically in the same submit journey
+3. Investor dashboard exposes capital, retorno esperado abierto, retorno realizado, and concentración principal por pagador in one navigable landing page
+4. Marketplace and investor detail routes render cheque-centric cards/details with tasa, vencimiento, fracciones, and per-fraction economics visible before purchase
+5. Desktop/mobile happy-path verification proves the new risk-detail and investor-navigation surfaces work end-to-end
+
+**Plans:** 4 plans
+
+Plans:
+- [x] 05-01-PLAN.md — Expose structured AI risk facts and automatic tokenization status on cedente invoice detail
+- [x] 05-02-PLAN.md — Extend investor analytics and cheque-card contracts in the server/query layer
+- [x] 05-03-PLAN.md — Upgrade investor dashboard and detail UX with cheque-style navigation and richer stats
+- [x] 05-04-PLAN.md — Verify the Phase 5 risk + UX polish flow on desktop/mobile and record evidence
 
 ---
 *Roadmap created: 2026-03-28*

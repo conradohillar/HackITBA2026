@@ -106,8 +106,7 @@ function normalizeTransactionMetadata(metadata: Record<string, unknown> | null |
 }
 
 export function buildTimeline({ invoiceEvents, fractionEvents, transactions }: BuildTimelineInput): TimelineItem[] {
-  return [...invoiceEvents, ...fractionEvents]
-    .map((event) => {
+  const statusItems: TimelineItem[] = [...invoiceEvents, ...fractionEvents].map((event) => {
       const normalized = buildEventLabel(event);
 
       return {
@@ -117,18 +116,18 @@ export function buildTimeline({ invoiceEvents, fractionEvents, transactions }: B
         label: normalized.label,
         metadata: normalized.metadata,
       } satisfies TimelineItem;
-    })
-    .concat(
-      transactions.map((transaction) => ({
-        id: transaction.id,
-        at: transaction.created_at,
-        kind: 'financial' as const,
-        label: buildTransactionLabel(transaction.type),
-        amount: toNumber(transaction.amount),
-        metadata: normalizeTransactionMetadata(transaction.metadata, transaction.type),
-      })),
-    )
-    .sort((left, right) => {
+    });
+
+  const financialItems: TimelineItem[] = transactions.map((transaction) => ({
+    id: transaction.id,
+    at: transaction.created_at,
+    kind: 'financial',
+    label: buildTransactionLabel(transaction.type),
+    amount: toNumber(transaction.amount),
+    metadata: normalizeTransactionMetadata(transaction.metadata, transaction.type),
+  }));
+
+  return [...statusItems, ...financialItems].sort((left, right) => {
       const timeCompare = left.at.localeCompare(right.at);
 
       if (timeCompare !== 0) {

@@ -1,14 +1,18 @@
 import { notFound } from 'next/navigation';
 import { getInvoiceDetail } from '@/lib/invoices/queries';
+import { EventTimeline } from '@/components/invoices/event-timeline';
 import { RiskSummaryCard } from '@/components/invoices/risk-summary-card';
 import { InvoiceStatusStepper } from '@/components/invoices/invoice-status-stepper';
+import { SettlementActionForm } from '@/components/invoices/settlement-action-form';
+import { SettlementSummary } from '@/components/invoices/settlement-summary';
 import { TokenizationSummary } from '@/components/invoices/tokenization-summary';
+import { getCedenteInvoiceSettlementView } from '@/lib/settlement/queries';
 
 export default async function InvoiceDetailPage({ params }: { params: Promise<{ invoiceId: string }> }) {
   const { invoiceId } = await params;
-  const invoice = await getInvoiceDetail(invoiceId);
+  const [invoice, settlementView] = await Promise.all([getInvoiceDetail(invoiceId), getCedenteInvoiceSettlementView(invoiceId)]);
 
-  if (!invoice) {
+  if (!invoice || !settlementView) {
     notFound();
   }
 
@@ -46,8 +50,50 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
           totalFractions={invoice.total_fractions}
         />
       ) : null}
+
+      <SettlementSummary
+        cedenteDisbursementTotal={settlementView.settlement.cedenteDisbursementTotal}
+        description="Leé el capital levantado, el spread liquidado y el desembolso al cedente sin recalcular nada en cliente."
+        interestTotal={settlementView.settlement.interestTotal}
+        principalTotal={settlementView.settlement.principalTotal}
+      />
+
+      <SettlementActionForm canSettle={settlementView.settlement.canSettle} invoiceId={invoiceId} />
+
+      <EventTimeline items={settlementView.timeline} />
+
+      <section className="rounded-3xl border border-white/10 bg-slate-950/50 p-6">
+        <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Historial transaccional</p>
+        <h2 className="mt-2 text-2xl font-semibold text-white">Ledger visible para el cedente</h2>
+        <div className="mt-6 space-y-3">
+          {settlementView.transactionHistory.length === 0 ? (
+            <p className="rounded-2xl border border-dashed border-white/15 bg-black/20 p-4 text-sm text-slate-300">
+              Todavía no hay movimientos visibles para este emisor.
+            </p>
+          ) : (
+            settlementView.transactionHistory.map((transaction) => (
+              <article key={transaction.id} className="grid gap-3 rounded-2xl border border-white/10 bg-black/20 p-4 md:grid-cols-[1fr,auto] md:items-center">
+                <div>
+                  <p className="text-sm uppercase tracking-[0.2em] text-slate-500">{transaction.type}</p>
+                  <p className="mt-1 text-lg font-semibold text-white">{transaction.description}</p>
+                  <p className="mt-1 text-sm text-slate-400">{transaction.at}</p>
+                </div>
+                <p className="text-right text-lg font-semibold text-white">{formatCurrency(transaction.amount)}</p>
+              </article>
+            ))
+          )}
+        </div>
+      </section>
     </section>
   );
+}
+
+function formatCurrency(amount: number) {
+  return new Intl.NumberFormat('es-AR', {
+    style: 'currency',
+    currency: 'ARS',
+    maximumFractionDigits: 2,
+  }).format(amount);
 }
 
 function Metric({ label, value }: { label: string; value: string }) {

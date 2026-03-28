@@ -163,9 +163,11 @@ function roundToCents(value: number) {
   return Math.round((value + Number.EPSILON) * 100) / 100;
 }
 
-function expectedReturnForHolding(holding: Pick<InvestorHoldingRow, 'amount' | 'net_amount' | 'invested_principal'>) {
-  const invoiceAmount = toNumber('invoice_amount' in holding ? holding.invoice_amount : holding.amount);
-  const invoiceNetAmount = toNumber('invoice_net_amount' in holding ? holding.invoice_net_amount : holding.net_amount);
+function expectedReturnForHolding(
+  holding: Pick<InvestorHoldingRow, 'amount' | 'net_amount' | 'invested_principal' | 'invoice_amount' | 'invoice_net_amount'>,
+) {
+  const invoiceAmount = toNumber(holding.invoice_amount ?? holding.amount);
+  const invoiceNetAmount = toNumber(holding.invoice_net_amount ?? holding.net_amount);
   const investedPrincipal = toNumber(holding.invested_principal);
 
   if (invoiceAmount <= 0 || invoiceNetAmount <= 0 || investedPrincipal <= 0) {
@@ -414,9 +416,11 @@ export async function getCedenteDashboard(overrides?: Partial<QueryDependencies>
     };
   }
 
+  const userId = auth.user!.id;
+
   const [invoices, transactions] = await Promise.all([
-    dependencies.listCedenteInvoices(auth.user.id),
-    dependencies.listCedenteTransactions(auth.user.id),
+    dependencies.listCedenteInvoices(userId),
+    dependencies.listCedenteTransactions(userId),
   ]);
 
   const statusCounts = invoices.reduce<Record<string, number>>((counts, invoice) => {
@@ -438,7 +442,7 @@ export async function getCedenteDashboard(overrides?: Partial<QueryDependencies>
     spreadTotal,
     recentTransactions: sortTransactionsDesc(
       transactions
-        .filter((transaction) => transaction.to_user_id === auth.user.id)
+        .filter((transaction) => transaction.to_user_id === userId)
         .map(mapDashboardTransaction),
     ),
     invoices: invoices.map(mapInvoiceSummary),
@@ -459,9 +463,11 @@ export async function getInvestorDashboard(overrides?: Partial<QueryDependencies
     };
   }
 
+  const userId = auth.user!.id;
+
   const [holdings, transactions] = await Promise.all([
-    dependencies.listInvestorHoldings(auth.user.id),
-    dependencies.listInvestorTransactions(auth.user.id),
+    dependencies.listInvestorHoldings(userId),
+    dependencies.listInvestorTransactions(userId),
   ]);
 
   const mappedHoldings = holdings.map((holding) => ({
@@ -528,7 +534,9 @@ export async function getCedenteInvoiceSettlementView(
     return null;
   }
 
-  const invoice = await dependencies.getCedenteInvoice(auth.user.id, invoiceId);
+  const userId = auth.user!.id;
+
+  const invoice = await dependencies.getCedenteInvoice(userId, invoiceId);
 
   if (!invoice) {
     return null;
@@ -538,7 +546,7 @@ export async function getCedenteInvoiceSettlementView(
     dependencies.listInvoiceTransactions(invoiceId),
     dependencies.listInvoiceEvents(invoiceId),
   ]);
-  const relevantTransactions = transactions.filter((transaction) => transaction.to_user_id === auth.user.id);
+  const relevantTransactions = transactions.filter((transaction) => transaction.to_user_id === userId);
 
   return {
     invoice: mapInvoiceDetail(invoice),
@@ -547,7 +555,7 @@ export async function getCedenteInvoiceSettlementView(
       fractionEvents: events.fractionEvents,
       transactions,
     }),
-    transactionHistory: mapRoleTransactionHistory(relevantTransactions, auth.user.id),
+    transactionHistory: mapRoleTransactionHistory(relevantTransactions, userId),
     settlement: {
       principalTotal: roundToCents(
         transactions
@@ -580,7 +588,9 @@ export async function getInvestorInvoiceSettlementView(
     return null;
   }
 
-  const holding = await dependencies.getInvestorInvoiceHolding(auth.user.id, invoiceId);
+  const userId = auth.user!.id;
+
+  const holding = await dependencies.getInvestorInvoiceHolding(userId, invoiceId);
 
   if (!holding || !['funding', 'funded', 'settling', 'settled'].includes(holding.status)) {
     return null;
@@ -591,7 +601,7 @@ export async function getInvestorInvoiceSettlementView(
     dependencies.listInvoiceEvents(invoiceId),
   ]);
   const relevantTransactions = transactions.filter(
-    (transaction) => transaction.to_user_id === auth.user.id || transaction.from_user_id === auth.user.id,
+    (transaction) => transaction.to_user_id === userId || transaction.from_user_id === userId,
   );
 
   return {
@@ -601,7 +611,7 @@ export async function getInvestorInvoiceSettlementView(
       fractionEvents: events.fractionEvents,
       transactions,
     }),
-    transactionHistory: mapRoleTransactionHistory(relevantTransactions, auth.user.id),
+    transactionHistory: mapRoleTransactionHistory(relevantTransactions, userId),
     holding: {
       ownedFractions: holding.owned_fractions,
       investedPrincipal: toNumber(holding.invested_principal),

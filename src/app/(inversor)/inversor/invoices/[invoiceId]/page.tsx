@@ -1,16 +1,30 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { EventTimeline } from '@/components/invoices/event-timeline';
+import { InvoiceStatusStepper } from '@/components/invoices/invoice-status-stepper';
+import { SettlementSummary } from '@/components/invoices/settlement-summary';
 import { PurchaseFractionsForm } from '@/components/marketplace/purchase-fractions-form';
 import { RiskBadge } from '@/components/invoices/risk-badge';
 import { getInvoiceFundingSnapshot } from '@/lib/marketplace/queries';
+import { getInvestorInvoiceSettlementView } from '@/lib/settlement/queries';
 
 export default async function InvestorInvoiceDetailPage({ params }: { params: Promise<{ invoiceId: string }> }) {
   const { invoiceId } = await params;
-  const snapshot = await getInvoiceFundingSnapshot(invoiceId);
+  const [snapshot, settlementView] = await Promise.all([getInvoiceFundingSnapshot(invoiceId), getInvestorInvoiceSettlementView(invoiceId)]);
 
-  if (!snapshot) {
+  if (!snapshot && !settlementView) {
     notFound();
   }
+
+  const currentStatus =
+    settlementView?.invoice.status ?? (snapshot ? (snapshot.availableFractions === 0 ? 'funded' : 'funding') : 'funding');
+  const title = settlementView?.invoice.invoiceNumber ?? snapshot?.invoiceNumber ?? 'Factura';
+  const payerName = settlementView?.invoice.pagadorName ?? snapshot?.pagadorName ?? '';
+  const amount = settlementView?.invoice.amount ?? snapshot?.amount ?? 0;
+  const netAmount = settlementView?.invoice.netAmount ?? snapshot?.netAmount ?? 0;
+  const dueDate = settlementView?.invoice.dueDate ?? snapshot?.dueDate ?? '';
+  const discountRate = snapshot?.discountRate ?? 0;
+  const riskTier = snapshot?.riskTier ?? 'A';
 
   return (
     <section className="mx-auto max-w-6xl space-y-8 px-6 py-16">
@@ -21,23 +35,72 @@ export default async function InvestorInvoiceDetailPage({ params }: { params: Pr
         <div className="mt-6 flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Detalle de inversión</p>
-            <h1 className="mt-3 text-4xl font-semibold text-white">{snapshot.invoiceNumber}</h1>
-            <p className="mt-2 text-lg text-slate-300">{snapshot.pagadorName}</p>
+            <h1 className="mt-3 text-4xl font-semibold text-white">{title}</h1>
+            <p className="mt-2 text-lg text-slate-300">{payerName}</p>
           </div>
-          <RiskBadge tier={snapshot.riskTier} />
+          <RiskBadge tier={riskTier} />
         </div>
 
         <div className="mt-6 grid gap-4 md:grid-cols-4">
-          <Metric label="Monto total" value={`ARS ${snapshot.amount.toLocaleString('es-AR')}`} />
-          <Metric label="Monto neto" value={`ARS ${snapshot.netAmount.toLocaleString('es-AR')}`} />
-          <Metric label="Tasa descuento" value={`${(snapshot.discountRate * 100).toFixed(1)}%`} />
-          <Metric label="Vencimiento" value={snapshot.dueDate} />
+          <Metric label="Monto total" value={`ARS ${amount.toLocaleString('es-AR')}`} />
+          <Metric label="Monto neto" value={`ARS ${netAmount.toLocaleString('es-AR')}`} />
+          <Metric label="Tasa descuento" value={`${(discountRate * 100).toFixed(1)}%`} />
+          <Metric label="Vencimiento" value={dueDate} />
         </div>
       </div>
 
-      <PurchaseFractionsForm initialSnapshot={snapshot} />
+      <InvoiceStatusStepper currentStatus={currentStatus} />
+
+      {settlementView ? (
+        <>
+          <section className="grid gap-4 md:grid-cols-3">
+            <Metric label="Fracciones propias" value={`${settlementView.holding.ownedFractions}`} />
+            <Metric label="Capital invertido" value={formatCurrency(settlementView.holding.investedPrincipal)} />
+            <Metric label="Retorno esperado" value={formatCurrency(settlementView.holding.expectedReturn)} />
+          </section>
+
+          <SettlementSummary
+            description="Tu vista de portafolio conserva capital invertido, retorno esperado y retorno realizado cuando la factura avanza a settlement."
+            heading="Resumen del holding"
+            interestTotal={settlementView.holding.realizedReturn}
+            principalTotal={settlementView.holding.investedPrincipal}
+          />
+
+          <EventTimeline items={settlementView.timeline} />
+
+          <section className="rounded-3xl border border-white/10 bg-slate-950/50 p-6">
+            <p className="text-sm uppercase tracking-[0.3em] text-slate-400">Movimientos del inversor</p>
+            <h2 className="mt-2 text-2xl font-semibold text-white">Capital + rendimiento registrados</h2>
+            <div className="mt-6 space-y-3">
+              {settlementView.transactionHistory.map((transaction) => (
+                <article key={transaction.id} className="grid gap-3 rounded-2xl border border-white/10 bg-black/20 p-4 md:grid-cols-[1fr,auto] md:items-center">
+                  <div>
+                    <p className="text-sm uppercase tracking-[0.2em] text-slate-500">{transaction.type}</p>
+                    <p className="mt-1 text-lg font-semibold text-white">{transaction.description}</p>
+                    <p className="mt-1 text-sm text-slate-400">{transaction.at}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-xs uppercase tracking-[0.2em] text-slate-500">{transaction.direction === 'in' ? 'Ingreso' : 'Egreso'}</p>
+                    <p className="mt-1 text-lg font-semibold text-white">{formatCurrency(transaction.amount)}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        </>
+      ) : null}
+
+      {snapshot ? <PurchaseFractionsForm initialSnapshot={snapshot} /> : null}
     </section>
   );
+}
+
+function formatCurrency(amount: number) {
+  return new Intl.NumberFormat('es-AR', {
+    style: 'currency',
+    currency: 'ARS',
+    maximumFractionDigits: 2,
+  }).format(amount);
 }
 
 function Metric({ label, value }: { label: string; value: string }) {

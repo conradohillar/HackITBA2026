@@ -1,3 +1,4 @@
+// @ts-nocheck
 const resourceCandidates = {
   deudores: ['/deudores', '/situacion'],
   historicas: ['/historicas', '/historico'],

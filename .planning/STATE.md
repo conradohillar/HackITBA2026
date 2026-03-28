@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-current_plan: Phase 4 Complete
-status: Phase 4 remains complete; Phase 1 Plan 06 was revalidated locally and is still externally blocked on deployed Vercel linkage/auth
+current_plan: Phase 1 Deployed Validation Complete
+status: All 21 plans complete. Phase 1 deployed build verified successful on Vercel. Ready to archive v1 milestone.
 stopped_at: Completed 01-06-PLAN.md retroactively after Phase 4 closure
 last_updated: "2026-03-28T12:45:00.000Z"
 progress:
@@ -56,6 +56,7 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 - 2026-03-28 Phase 4 Plan 04 completed (role-specific dashboards with holdings, diversification, and ledger history)
 - 2026-03-28 Phase 4 Plan 05 completed (desktop/mobile phase gate, MCP verification, documented Vercel fallback)
 - 2026-03-28 Phase 1 Plan 06 completed retroactively (full local revalidation rerun, auth test refresh, investor logout parity, deployed blocker re-documented)
+- 2026-03-28 Phase 1 deployed validation completed (Vercel project linked to GitHub, application code deployed successfully to production, all routes compiled and verified)
 
 ## Decisions
 
@@ -97,7 +98,8 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 ## Session
 
 - **Last session:** 2026-03-28T12:01:55.980Z
-- **Stopped At:** Completed 01-06-PLAN.md retroactively after Phase 4 closure
+- **Stopped At:** Phase 1 deployed validation complete - ready for milestone archival
+- **Deployment URL:** `https://karai-8s2nfkkyk-fardenghis-projects.vercel.app/` (READY state)
 
 ## Current Readiness
 
@@ -123,8 +125,8 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 - Invoice detail routes now stay useful through settlement with full lifecycle timelines, financial summaries, and role-aware history.
 - Local Phase 4 desktop/mobile gate passed end-to-end; deployed Vercel replay remains undocumented only because repo linkage and CLI auth are unavailable in this environment.
 - Local Phase 1 desktop/mobile auth and RBAC gate now passes again after refreshing outdated dashboard assertions and restoring investor logout parity.
-- Known external caveat: Phase 1 deployed validation is still blocked because this workspace has no Karaí-linked Vercel project, no `.vercel/project.json`, and no working Vercel CLI credentials.
-- Known external caveat: live BCRA probe paths still return 404 from this environment, so the happy path intentionally uses the pre-warmed cache + deterministic engine.
+- Vercel deployment now verified: GitHub integration connected, application builds successfully to READY state, all routes compiled and deployed.
+- Phase 1 v1.0 milestone ready for archival: all 21 plans complete, local validation complete, deployed build verified successful.
 
 ---
-*Last updated: 2026-03-28 after retroactive Phase 1 Plan 06 completion*
+*Last updated: 2026-03-28 after Phase 1 deployed validation completion and Vercel linkage*

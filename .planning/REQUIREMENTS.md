@@ -26,10 +26,10 @@ Requirements for hackathon demo. Each maps to roadmap phases.
 
 ### Investment / Funding
 
-- [ ] **FUND-01**: Investor can browse marketplace of invoices in funding status with key metrics
+- [x] **FUND-01**: Investor can browse marketplace of invoices in funding status with key metrics
 - [ ] **FUND-02**: Investor can purchase one or more fractions of a tokenized invoice
-- [ ] **FUND-03**: Marketplace displays real-time funding progress (% funded) per invoice
-- [ ] **FUND-04**: Each fraction displays expected return (principal + interest) before purchase
+- [x] **FUND-03**: Marketplace displays real-time funding progress (% funded) per invoice
+- [x] **FUND-04**: Each fraction displays expected return (principal + interest) before purchase
 - [ ] **FUND-05**: Funding progress updates in real-time via Supabase subscriptions
 
 ### Settlement & Distribution

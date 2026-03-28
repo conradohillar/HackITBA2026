@@ -7,15 +7,16 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 
 ## Current Status
 - **Phase:** 3 — Marketplace & Funding
-- **Status:** Ready to start
+- **Status:** In progress
 - **Milestone:** v1
+- **Current plan:** 03-02-PLAN.md next
 
 ## Phase Progress
 | # | Phase | Status |
 |---|-------|--------|
 | 1 | Foundation & Auth | Completed |
 | 2 | Invoice Origination & Risk Engine | Completed |
-| 3 | Marketplace & Funding | Not started |
+| 3 | Marketplace & Funding | In progress (1/5 plans complete) |
 | 4 | Settlement, Dashboards & Demo Polish | Not started |
 
 ## Recent Activity
@@ -25,11 +26,26 @@ See: .planning/PROJECT.md (updated 2026-03-28)
 - 2026-03-28 Roadmap created (4 phases, coarse granularity)
 - 2026-03-28 Phase 1 implementation completed (auth, RBAC, schema, validation)
 - 2026-03-28 Phase 2 implementation completed (invoice origination, risk engine, tokenization, desktop/mobile verification)
+- 2026-03-28 Phase 3 Plan 01 completed (marketplace contracts, funding math, investor read model)
+
+## Decisions
+- 2026-03-28 Phase 3 keeps marketplace contracts type-only so UI/realtime layers share one stable funding shape.
+- 2026-03-28 Expected return previews use proportional invoice math from fraction net amount versus invoice net and face value.
+- 2026-03-28 Marketplace query utilities stay dependency-injectable so Vitest can validate server reads without a Next request scope.
+
+## Performance Metrics
+- 2026-03-28 — Phase `03-marketplace-funding` Plan `01` — duration `5min` — tasks `3` — files `6`
+
+## Session
+- **Last session:** 2026-03-28T10:19:13Z
+- **Stopped At:** Completed 03-marketplace-funding-01-PLAN.md
 
 ## Current Readiness
 - Phase 2 validation artifact: `.planning/phases/02-invoice-origination-risk-engine/02-VALIDATION.md`
 - Phase 3 can start without human input: Phase 2 invoices now end in `funding` with fractions and token hashes persisted.
+- Phase 3 Plan 01 summary: `.planning/phases/03-marketplace-funding/03-01-SUMMARY.md`
+- Next execution target: `03-02-PLAN.md` for the `fund_invoice()` boundary and realtime publication enablement.
 - Known external caveat: live BCRA probe paths still return 404 from this environment, so the happy path intentionally uses the pre-warmed cache + deterministic engine.
 
 ---
-*Last updated: 2026-03-28 after Phase 2 execution*
+*Last updated: 2026-03-28 after Phase 3 Plan 01 execution*

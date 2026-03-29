@@ -24,10 +24,10 @@ export default async function CedenteDashboardPage() {
             <p className="text-xs uppercase tracking-[0.24em] text-emerald-200">Siguiente acción</p>
             <h3 className="mt-3 text-2xl font-semibold text-white">Cargá un cheque nuevo y dejá que Karaí haga el resto.</h3>
             <p className="mt-3 max-w-xl text-sm leading-7 text-slate-300">
-              Consultamos BCRA, armamos narrativa IA, calculamos la tasa y tokenizamos automáticamente con tope de ARS 100.000 por token.
+              Consultamos al BCRA, analizamos el índice de riesgo usando un modelo de IA, calculamos la tasa apropiada y tokenizamos automáticamente.
             </p>
             <div className="mt-5 flex flex-wrap gap-3">
-              <Link className="rounded-full bg-emerald-300 px-5 py-3 font-semibold text-slate-950 transition hover:bg-emerald-200" href="/cedente/invoices/new">
+              <Link className="rounded-full bg-emerald-300 px-5 py-3 font-semibold text-slate-700 transition hover:bg-emerald-200" href="/cedente/invoices/new">
                 Cargar cheque
               </Link>
               <span className="rounded-full border border-white/10 px-4 py-3 text-sm text-slate-300">
@@ -58,7 +58,7 @@ export default async function CedenteDashboardPage() {
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <MetricCard hint={`${dashboard.statusCounts.funding ?? 0} en funding · ${dashboard.statusCounts.funded ?? 0} funded`} label="Cheques activos" value={`${dashboard.invoices.length}`} />
-        <MetricCard hint="Suma de net_amount para funded, settling y settled" label="Capital levantado" value={formatCurrency(dashboard.totalCapitalRaised)} />
+        <MetricCard hint="Capital total recaudado en cheques fondeados y liquidados" label="Capital levantado" value={formatCurrency(dashboard.totalCapitalRaised)} />
         <MetricCard hint="Spread total sobre monto nominal de cheques fondeados o liquidados" label="Costo efectivo" value={`${(dashboard.effectiveFinancingCost * 100).toFixed(2)}%`} />
         <MetricCard hint="Spread acumulado" label="Spread total" value={formatCurrency(dashboard.spreadTotal)} />
       </section>
@@ -105,6 +105,6 @@ function formatCurrency(amount: number) {
   return new Intl.NumberFormat('es-AR', {
     style: 'currency',
     currency: 'ARS',
-    maximumFractionDigits: 2,
+    maximumFractionDigits: 0,
   }).format(amount);
 }

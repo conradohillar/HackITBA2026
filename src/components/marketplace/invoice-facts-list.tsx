@@ -22,8 +22,8 @@ export function InvoiceFactsList({
       <Fact label="CUIT" value={payerCuit} />
       <Fact label="Días al vencimiento" value={`${daysToMaturity}`} />
       <Fact label="Tasa anual" value={`${(discountRate * 100).toFixed(1)}%`} />
-      <Fact label="Precio por token" value={`ARS ${perFractionNetAmount.toLocaleString('es-AR')}`} />
-      <Fact label="Retorno por fracción" value={`ARS ${perFractionExpectedReturn.toLocaleString('es-AR')}`} />
+      <Fact label="Precio por token" value={`ARS ${Math.round(perFractionNetAmount).toLocaleString('es-AR')}`} />
+      <Fact label="Retorno por fracción" value={`ARS ${Math.round(perFractionExpectedReturn).toLocaleString('es-AR')}`} />
       <Fact label="Disponibles" value={`${availableFractions} tokens`} />
       <Fact label="Progreso de funding" value={`${progressPercentage.toFixed(1)}%`} />
     </div>

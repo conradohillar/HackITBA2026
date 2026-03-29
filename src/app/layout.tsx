@@ -1,6 +1,12 @@
 import type { Metadata } from 'next';
+import { Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { AppShell } from '@/components/layout/app-shell';
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-space-grotesk',
+});
 
 export const metadata: Metadata = {
   title: 'Karaí',
@@ -13,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" className={spaceGrotesk.variable}>
       <body>
         <AppShell>{children}</AppShell>
       </body>

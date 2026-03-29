@@ -11,7 +11,7 @@ import { FormShell } from '@/components/auth/form-shell';
 import { authRoles } from '@/lib/auth/types';
 
 const roleLabels = {
-  cedente: 'Cedente · PyME que sube cheques',
+  cedente: 'Cedente · Subí tu cheque',
   inversor: 'Inversor · Compra fracciones con retorno fijo',
 } as const;
 
@@ -57,7 +57,7 @@ export function SignupForm() {
     <FormShell
       eyebrow="Registro"
       title="Creá tu cuenta y entrá al dashboard correcto"
-      description="Para el demo, la cuenta queda lista al instante: elegís tu rol, confirmamos el perfil en el servidor y te llevamos directo al flujo adecuado."
+      description=""
       footer={
         <>
           ¿Ya tenés cuenta?{' '}
@@ -67,7 +67,7 @@ export function SignupForm() {
         </>
       }
     >
-      <form className="space-y-5" onSubmit={onSubmit}>
+      <form className="space-y-4" onSubmit={onSubmit}>
         <div>
           <label className="mb-2 block text-sm font-medium text-slate-200" htmlFor="signup-email">
             Email
@@ -76,7 +76,7 @@ export function SignupForm() {
             id="signup-email"
             type="email"
             autoComplete="email"
-            className="w-full rounded-2xl border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none placeholder:text-slate-500"
+            className="w-full rounded-2xl border border-white/10 bg-zinc-800/50 px-4 py-3 text-white outline-none placeholder:text-slate-500"
             placeholder="fundador@empresa.com"
             {...form.register('email')}
           />
@@ -93,7 +93,7 @@ export function SignupForm() {
             <input
               id="signup-display-name"
               type="text"
-              className="w-full rounded-2xl border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none placeholder:text-slate-500"
+              className="w-full rounded-2xl border border-white/10 bg-zinc-800/50 px-4 py-3 text-white outline-none placeholder:text-slate-500"
               placeholder="María Pérez"
               {...form.register('displayName')}
             />
@@ -109,7 +109,7 @@ export function SignupForm() {
             <input
               id="signup-company-name"
               type="text"
-              className="w-full rounded-2xl border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none placeholder:text-slate-500"
+              className="w-full rounded-2xl border border-white/10 bg-zinc-800/50 px-4 py-3 text-white outline-none placeholder:text-slate-500"
               placeholder="Acme SA"
               {...form.register('companyName')}
             />
@@ -127,7 +127,7 @@ export function SignupForm() {
             id="signup-password"
             type="password"
             autoComplete="new-password"
-            className="w-full rounded-2xl border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none placeholder:text-slate-500"
+            className="w-full rounded-2xl border border-white/10 bg-zinc-800/50 px-4 py-3 text-white outline-none placeholder:text-slate-500"
             placeholder="Mínimo 8 caracteres"
             {...form.register('password')}
           />
@@ -148,7 +148,7 @@ export function SignupForm() {
                   className={`cursor-pointer rounded-2xl border px-4 py-4 transition ${
                     active
                       ? 'border-emerald-300 bg-emerald-400/10 text-white'
-                      : 'border-white/10 bg-slate-900 text-slate-300'
+                      : 'border-white/10 bg-zinc-800/50 text-slate-300'
                   }`}
                 >
                   <input className="sr-only" type="radio" value={role} {...form.register('role')} />

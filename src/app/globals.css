@@ -2,8 +2,8 @@
 
 :root {
   color-scheme: dark;
-  --font-display: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
-  --font-body: 'Avenir Next', 'Segoe UI', sans-serif;
+  --font-display: var(--font-space-grotesk), 'Segoe UI', sans-serif;
+  --font-body: var(--font-space-grotesk), 'Segoe UI', sans-serif;
   --font-mono: 'SFMono-Regular', 'Courier New', monospace;
   --ink-950: #06110f;
   --ink-900: #0b1c19;
@@ -338,6 +338,11 @@ h4 {
   0%, 22% { opacity: 0; }
   30%, 46% { opacity: 1; }
   54%, 100% { opacity: 0.3; }
+}
+
+@keyframes dollar-rotate {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
 }
 
 @media (max-width: 768px) {

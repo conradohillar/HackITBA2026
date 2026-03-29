@@ -46,7 +46,7 @@ export function LoginForm() {
     <FormShell
       eyebrow="Acceso"
       title="Entrá a Karaí"
-      description="Usá tu email y contraseña para volver al dashboard correcto según tu rol."
+      description="Usá tu email y contraseña para ingresar al dashboard."
       footer={
         <>
           ¿Todavía no tenés cuenta?{' '}
@@ -65,7 +65,7 @@ export function LoginForm() {
             id="login-email"
             type="email"
             autoComplete="email"
-            className="w-full rounded-2xl border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none ring-0 placeholder:text-slate-500"
+            className="w-full rounded-2xl border border-white/10 bg-zinc-800/50 px-4 py-3 text-white outline-none ring-0 placeholder:text-slate-500"
             placeholder="tu@email.com"
             {...form.register('email')}
           />
@@ -82,7 +82,7 @@ export function LoginForm() {
             id="login-password"
             type="password"
             autoComplete="current-password"
-            className="w-full rounded-2xl border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none ring-0 placeholder:text-slate-500"
+            className="w-full rounded-2xl border border-white/10 bg-zinc-800/50 px-4 py-3 text-white outline-none ring-0 placeholder:text-slate-500"
             placeholder="••••••••"
             {...form.register('password')}
           />

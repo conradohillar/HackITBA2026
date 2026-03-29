@@ -80,8 +80,8 @@ export function PurchaseFractionsForm({ initialSnapshot }: PurchaseFractionsForm
 
         <div className="grid gap-4 md:grid-cols-3">
           <Metric label="Disponibles" value={`${snapshot.availableFractions}`} />
-          <Metric label="Precio por token" value={`ARS ${snapshot.perFractionNetAmount.toLocaleString('es-AR')}`} />
-          <Metric label="Retorno por token" value={`ARS ${snapshot.perFractionExpectedReturn.toLocaleString('es-AR')}`} />
+          <Metric label="Precio por token" value={`ARS ${Math.round(snapshot.perFractionNetAmount).toLocaleString('es-AR')}`} />
+          <Metric label="Retorno por token" value={`ARS ${Math.round(snapshot.perFractionExpectedReturn).toLocaleString('es-AR')}`} />
         </div>
 
         <div className="rounded-[1.75rem] border border-sky-300/20 bg-sky-400/10 p-5 text-sm text-sky-50">
@@ -112,7 +112,7 @@ export function PurchaseFractionsForm({ initialSnapshot }: PurchaseFractionsForm
             Cantidad de fracciones
           </label>
           <input
-            className="w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none ring-0"
+            className="w-full rounded-2xl border border-white/10 bg-zinc-800/50 px-4 py-3 text-white outline-none ring-0"
             id="fraction-count"
             max={maxFractionCount}
             min={1}

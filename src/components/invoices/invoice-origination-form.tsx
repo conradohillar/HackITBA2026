@@ -59,7 +59,7 @@ export function InvoiceOriginationForm() {
             <input
               id={field.name}
               type={field.type}
-              className="w-full rounded-2xl border border-white/10 bg-slate-950 px-4 py-3 text-white outline-none"
+              className="w-full rounded-2xl border border-white/10 bg-zinc-800/50 px-4 py-3 text-white outline-none"
               {...form.register(field.name as keyof InvoiceOriginationFormInput, {
                 valueAsNumber: field.type === 'number',
               })}
@@ -80,7 +80,7 @@ export function InvoiceOriginationForm() {
         <textarea
           id="description"
           rows={5}
-          className="w-full rounded-3xl border border-white/10 bg-slate-950 px-4 py-3 text-white outline-none"
+          className="w-full rounded-3xl border border-white/10 bg-zinc-800/50 px-4 py-3 text-white outline-none"
           {...form.register('description')}
         />
         {form.formState.errors.description ? (
@@ -89,7 +89,7 @@ export function InvoiceOriginationForm() {
       </div>
 
       <div className="rounded-[1.75rem] border border-emerald-300/20 bg-emerald-400/10 p-5 text-sm text-emerald-50">
-        Karaí define la tokenización automáticamente cuando termina el scoring: divide el cheque en la mayor cantidad posible para que ningún token supere los ARS {MAX_TOKEN_PRICE_PESOS.toLocaleString('es-AR')}.
+        Karaí define la tokenización automáticamente cuando termina el scoring: divide el cheque en fracciones con un valor mínimo de ARS {MAX_TOKEN_PRICE_PESOS.toLocaleString('es-AR')} por token.
       </div>
 
       {formError ? <p className="rounded-2xl bg-rose-500/10 px-4 py-3 text-sm text-rose-200">{formError}</p> : null}

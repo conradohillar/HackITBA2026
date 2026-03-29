@@ -1,7 +1,5 @@
 import Link from 'next/link';
-import { getCurrentAuthState, getDashboardPathForRole } from '@/lib/auth/session';
-import { RiskScanMotion } from '@/components/marketing/risk-scan-motion';
-import { TokenizationMotion } from '@/components/marketing/tokenization-motion';
+import { DollarSpin } from '@/components/marketing/dollar-spin';
 
 const journey = [
   {
@@ -37,59 +35,28 @@ const highlights = [
   'Narrativa de riesgo con IA sobre datos BCRA',
 ] as const;
 
-export default async function HomePage() {
-  const { profile } = await getCurrentAuthState();
-  const dashboardHref = profile ? getDashboardPathForRole(profile.role) : '/signup';
-
+export default function HomePage() {
   return (
     <div className="marketing-grid">
-      <section className="mx-auto grid min-h-[calc(100vh-81px)] max-w-6xl gap-10 px-6 py-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-20">
-        <div className="space-y-8">
-          <div className="inline-flex rounded-full border border-emerald-300/20 bg-emerald-400/10 px-4 py-2 text-xs uppercase tracking-[0.3em] text-emerald-200">
-            Riesgo crediticio con IA + BCRA
-          </div>
-          <div className="space-y-5">
-            <h2 className="max-w-4xl text-5xl font-semibold leading-tight text-white md:text-6xl">
-              Cheques tokenizados, tasa clara y flujos realmente navegables.
-            </h2>
-            <p className="max-w-2xl text-lg leading-8 text-slate-300">
-              Karaí conecta analisis de riesgo asistido por OpenAI, tokenizacion automatica y una UX cheque-first para que el cedente publique rapido y el inversor compre con contexto real.
-            </p>
-          </div>
+      <section className="mx-auto max-w-6xl px-6 py-12 lg:py-20">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <h2 className="max-w-4xl text-5xl font-semibold leading-tight text-white md:text-6xl">
+            Cheques tokenizados, tasa clara y flujos realmente navegables.
+          </h2>
+          <DollarSpin />
+        </div>
 
-          <div className="flex flex-wrap gap-3">
-            <Link className="rounded-full bg-emerald-300 px-6 py-3 font-semibold text-slate-950 transition hover:bg-emerald-200" href={dashboardHref}>
-              {profile ? 'Ir a mi panel' : 'Probar el flujo'}
-            </Link>
-            <Link className="rounded-full border border-white/10 px-6 py-3 font-semibold text-white transition hover:bg-white/5" href="/signup">
-              Crear cuenta demo
-            </Link>
-            <Link className="rounded-full border border-white/10 px-6 py-3 font-semibold text-white transition hover:bg-white/5" href="/login">
-              Ingresar
-            </Link>
-          </div>
+        <div className="mt-10 space-y-8">
+          <p className="max-w-2xl text-lg leading-8 text-slate-300">
+            Karaí conecta PyMEs que quieren adelantar cheques con inversores que buscan mejores rendimientos, con análisis de riesgo potenciado por OpenAI y operaciones aseguradas en la blockchain.
+          </p>
 
-          <div className="grid gap-3 md:grid-cols-2">
+          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
             {highlights.map((item) => (
               <div className="rounded-[1.5rem] border border-white/10 bg-slate-950/45 px-5 py-4 text-sm text-slate-200" key={item}>
                 {item}
               </div>
             ))}
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-3">
-            <StatCard label="Ticket maximo por token" value="ARS 100k" />
-            <StatCard label="Lectura de riesgo" value="BCRA + IA" />
-            <StatCard label="Rutas clave" value="100% alcanzables" />
-          </div>
-        </div>
-
-        <div className="space-y-6">
-          <div className="marketing-panel rounded-[2rem] p-4">
-            <TokenizationMotion />
-          </div>
-          <div className="marketing-panel rounded-[2rem] p-4">
-            <RiskScanMotion />
           </div>
         </div>
       </section>
@@ -105,15 +72,6 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
-    </div>
-  );
-}
-
-function StatCard({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-[1.5rem] border border-white/10 bg-black/20 p-5">
-      <p className="text-xs uppercase tracking-[0.24em] text-slate-500">{label}</p>
-      <p className="mt-3 text-2xl font-semibold text-white">{value}</p>
     </div>
   );
 }

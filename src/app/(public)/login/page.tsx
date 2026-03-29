@@ -6,7 +6,7 @@ export default function LoginPage() {
       <div className="space-y-5">
         <p className="text-sm uppercase tracking-[0.3em] text-emerald-300">Acceso a la plataforma</p>
         <h2 className="text-5xl font-semibold text-white md:text-6xl">
-          Volvé al flujo correcto y seguí donde dejaste cada cheque.
+          Iniciá sesión y retomá tus operaciones donde las dejaste.
         </h2>
       </div>
 

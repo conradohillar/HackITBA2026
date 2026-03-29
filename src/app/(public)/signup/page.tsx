@@ -5,7 +5,7 @@ export default function SignupPage() {
     <section className="mx-auto grid min-h-[calc(100vh-81px)] max-w-6xl gap-10 px-6 py-4 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-6">
       <div className="space-y-6">
         <h2 className="text-5xl font-semibold text-white md:text-6xl">
-          Elegí tu rol y accedé a la plataforma donde el cheque ya vive con riesgo, tasa y tokenización.
+          Elegí tu rol y empezá a operar cheques tokenizados con scoring automático y tasas transparentes.
         </h2>
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="rounded-[1.5rem] border border-white/10 bg-slate-950/45 p-5 text-slate-200">
